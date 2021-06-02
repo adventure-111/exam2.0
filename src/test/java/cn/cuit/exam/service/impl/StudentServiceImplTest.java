@@ -28,16 +28,32 @@ class StudentServiceImplTest {
     @Test
     void addStudent() {
         Student student = new Student();
-        student.setSno("2019000021");
+        student.setSno("2019000004");
         student.setSname("XXX");
         student.setPassword("123");
         student.setMname("软件工程");
         student.setSemester(19);
-        student.setCnt(9);
+        student.setCnt(2);
 
         studentService.addStudent(student);
     }
 
+    @Test
+    void  deleteStudent() {
+        String sno = "2019000021";
+        studentService.deleteStudent(sno);
+    }
 
+    @Test
+    void updateStudent() {
+        Student student = new Student();
+        student.setSno("2019000002");
+        student.setSname("XXXX");
+        student.setPassword("1234");
+        student.setMname("软件工程");
+        student.setSemester(19);
+        student.setCnt(3);
 
+        studentService.updateStudent(student);
+    }
 }

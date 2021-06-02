@@ -7,7 +7,6 @@ import cn.cuit.exam.bean.vo.StudentQuery;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public interface StudentService {
@@ -25,6 +24,25 @@ public interface StudentService {
      * @return
      */
     int addStudent(Student student);
+
+    /**
+     * 删除学生
+     * @param sno
+     * @return
+     */
+    int deleteStudent(String sno);
+
+    /**
+     * 批量删除学生
+     * @param snoList
+     */
+    void deleteStudentList(List<String> snoList);
+
+    /**
+     * 更新学生
+     * @param student
+     */
+    void updateStudent(Student student);
 
 //    /**
 //     * 删除学生

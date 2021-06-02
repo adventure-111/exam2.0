@@ -82,6 +82,12 @@
     where mno = #{mno} and semester = #{semester} and cnt = #{cnt}
   </select>
 
+  <select id="selectClassIdBySno" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select cid
+    from student_t
+    where sno = #{arg0}
+  </select>
+
   <select id="selectMajorMno" resultType="java.lang.String">
     select mno
     from major_t
@@ -100,6 +106,30 @@
     where cid = #{arg0}
   </update>
 
+  <update id="reduceStuNum">
+    update class_t
+    set num = num - 1
+    where cid in (select cid from student_t where sno = #{arg0})
+  </update>
+
+  <update id="updateStu" parameterType="cn.cuit.exam.bean.Student">
+    update student_t
+    set
+    <if test="sname != null">
+      sname = #{sname},
+    </if>
+    <if test="cid != null">
+      cid = #{cid}
+    </if>
+    where sno = #{sno}
+  </update>
+
+  <update id="updateUser" parameterType="cn.cuit.exam.bean.Student">
+    update user_t
+    set password = #{password}
+    where username = #{sno}
+  </update>
+
   <insert id="insertClass" parameterType="cn.cuit.exam.bean.Student"
           useGeneratedKeys="true" keyProperty="cid">
     insert class_t(mno, semester, cnt, num)
@@ -116,4 +146,13 @@
     values(#{sno}, #{password}, 'S')
   </insert>
 
+  <delete id="deleteStu">
+    delete from student_t
+    where sno = #{arg0}
+  </delete>
+
+  <delete id="deleteUser">
+    delete from user_t
+    where username = #{arg0}
+  </delete>
 </mapper>

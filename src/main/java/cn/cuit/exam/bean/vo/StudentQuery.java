@@ -1,5 +1,6 @@
 package cn.cuit.exam.bean.vo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -54,14 +55,16 @@ public class StudentQuery extends Query{
             semester_temp = Integer.parseInt(cname.substring(2,4));
             this.mshort = cname.substring(0,2);
             this.cnt = Integer.parseInt(cname.substring(4,5));
-        } else {
+        } else if ( cname.length() == 6 ){
             semester_temp = Integer.parseInt(cname.substring(3,5));
             this.mshort = cname.substring(0,3);
             this.cnt = Integer.parseInt(cname.substring(5,6));
+        } else {
+            semester_temp = 0; // 班级名称格式不对
         }
 
         if ( this.semester != null && semester_temp != this.semester) {
-            this.semester = 0;
+            this.semester = 0;// 班级名称中的年级与年级不一致
         } else {
             this.semester = semester_temp;
         }

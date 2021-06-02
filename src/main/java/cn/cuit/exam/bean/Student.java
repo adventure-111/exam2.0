@@ -23,6 +23,7 @@ public class Student implements Serializable {
     @ApiModelProperty(hidden = true)
     private Integer cid;
 
+    @ApiModelProperty(hidden = true)
     private String mshort;
 
     private Integer semester;

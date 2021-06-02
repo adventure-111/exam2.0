@@ -25,7 +25,7 @@ public class StudentServiceImpl implements StudentService {
         // 查询学生集合
         List<Student> stuList = studentMapper.queryStu(studentQuery);
         // 创建pageBean
-        PageBean<Student> pageBean = new PageBean<Student>(totalCount, stuList, studentQuery.pageSize, studentQuery.pageNum);
+        PageBean<Student> pageBean = new PageBean<Student>(totalCount, stuList, studentQuery.getPageSize(), studentQuery.getPageNum());
 
         return pageBean;
     }
@@ -47,10 +47,51 @@ public class StudentServiceImpl implements StudentService {
             cid = studentMapper.selectClassId(student);
         }
         student.setCid(cid);
-//        String mshort = studentMapper.selectMajorMshort(student.getMname());
         studentMapper.insertStu(student);
         studentMapper.insertUser(student);
 
         return 1;
     }
+
+    @Override
+    @Transactional
+    public int deleteStudent(String sno) {
+        // 减少班级学生人数
+        studentMapper.reduceStuNum(sno);
+        // 删除学生
+        studentMapper.deleteStu(sno);
+        // 删除用户
+        int count = studentMapper.deleteUser(sno);
+        return count;
+    }
+
+    @Override
+    public void deleteStudentList(List<String> snoList) {
+        for ( String sno : snoList ) {
+            deleteStudent(sno);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void updateStudent(Student student) {
+        Integer cid_old = studentMapper.selectClassIdBySno(student.getSno());
+        student.setMno(studentMapper.selectMajorMno(student.getMname()));
+        Integer cid_new = studentMapper.selectClassId(student);
+
+        if ( cid_new == null || !cid_old.equals(cid_new) ) {    // 若班级改变
+            studentMapper.reduceStuNum(student.getSno());       // 原班级人数减一
+            if ( cid_new != null ) {            // 班级存在 现班级人数加一
+                studentMapper.addStuNum(cid_new);
+            } else {
+                studentMapper.insertClass(student);   // 班级不存在 则创建班级
+                cid_new = studentMapper.selectClassId(student);
+            }
+        }
+        student.setCid(cid_new);
+        studentMapper.updateStu(student);   // 更新学生表
+        studentMapper.updateUser(student);  // 更新用户表
+    }
+
+
 }

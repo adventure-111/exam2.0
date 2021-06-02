@@ -22,6 +22,8 @@ public interface StudentMapper {
     // 查询班级cid
     Integer selectClassId(Student student);
 
+    Integer selectClassIdBySno(String sno);
+
     // 查询专业mno
     String selectMajorMno(String mname);
 
@@ -31,6 +33,9 @@ public interface StudentMapper {
     // 增加学生人数
     int addStuNum(int cid);
 
+    // 减少学生人数
+    int reduceStuNum(String sno);
+
     // 添加班级
     int insertClass(Student student);
 
@@ -39,5 +44,17 @@ public interface StudentMapper {
 
     // 添加用户
     int insertUser(Student student);
+
+    // 删除学生
+    int deleteStu(String sno);
+
+    // 删除用户
+    int deleteUser(String sno);
+
+    // 更新学生表
+    int updateStu(Student student);
+
+    // 更新用户表
+    int updateUser(Student student);
 
 }
