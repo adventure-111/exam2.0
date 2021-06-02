@@ -1,33 +1,31 @@
 package cn.cuit.exam.bean;
 
-public class Student {
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.ToString;
+
+import java.io.Serializable;
+
+@ToString
+@Data
+public class Student implements Serializable {
     private String sno;
 
     private String sname;
 
-    private String classname;
+    private String password;
 
-    public String getSno() {
-        return sno;
-    }
+    private String mname;
 
-    public void setSno(String sno) {
-        this.sno = sno;
-    }
+    @ApiModelProperty(hidden = true)
+    private String mno;
 
-    public String getSname() {
-        return sname;
-    }
+    @ApiModelProperty(hidden = true)
+    private Integer cid;
 
-    public void setSname(String sname) {
-        this.sname = sname;
-    }
+    private String mshort;
 
-    public String getClassname() {
-        return classname;
-    }
+    private Integer semester;
 
-    public void setClassname(String classname) {
-        this.classname = classname;
-    }
+    private Integer cnt;
 }
