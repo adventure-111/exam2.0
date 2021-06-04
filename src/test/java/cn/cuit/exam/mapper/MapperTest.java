@@ -26,4 +26,9 @@ public class MapperTest {
 //        studentMapper.insertClass()
     }
 
+    @Test
+    void test1() {
+
+    }
+
 }

@@ -36,6 +36,7 @@ class StudentServiceImplTest {
         student.setCnt(2);
 
         studentService.addStudent(student);
+
     }
 
     @Test

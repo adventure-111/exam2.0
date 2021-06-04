@@ -1,71 +1,158 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.cuit.exam.mapper.StudentMapper">
-  <resultMap id="BaseResultMap" type="cn.cuit.exam.bean.Student">
-    <id column="Sno" jdbcType="VARCHAR" property="sno" />
-    <result column="Sname" jdbcType="VARCHAR" property="sname" />
-    <result column="ClassName" jdbcType="VARCHAR" property="classname" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    Sno, Sname, ClassName
+
+  <!--    开启二级缓存,这样对所有select操作都会作缓存处理, 结果集实体类需继承序列化接口-->
+  <cache />
+
+  <sql id="query_items_where" >
+    <if test="sno != null">
+      and sno = #{sno}
+    </if>
+    <if test="sname != null">
+      and sname like '%${sname}%'
+    </if>
+    <if test="mname != null">
+      and mname like '%${mname}%'
+    </if>
+    <if test="mshort != null">
+      and mshort = #{mshort}
+    </if>
+    <if test="semester != null">
+      and semester = #{semester}
+    </if>
+    <if test="cnt != null">
+      and cnt = #{cnt}
+    </if>
+    <if test="school != null">
+      and school = #{school}
+    </if>
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from student_t
-    where Sno = #{sno,jdbcType=VARCHAR}
+
+  <select id="queryStu" parameterType="cn.cuit.exam.bean.vo.StudentQuery" resultType="cn.cuit.exam.bean.Student">
+    select
+    sno, sname, password, mname, mshort, semester, cnt
+    FROM student_t s
+    JOIN user_t
+    on username = sno
+    JOIN class_t c
+    on c.cid = s.cid
+    JOIN major_t m
+    on m.mno = c.mno
+
+    <where>
+      <include refid="query_items_where"/>
+    </where>
+
+    <if test="sort!=null and sort!=''">
+      ORDER BY ${sort}
+    </if>
+    <if test="direction!=null and direction!=''">
+      ${direction}
+    </if>
+
+    <trim prefix="limit " >
+      <if test="pageNum != null, pageSize != null">
+        #{pageNum}, #{pageSize}
+      </if>
+    </trim>
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+
+  <select id="queryStuCount" parameterType="cn.cuit.exam.bean.vo.StudentQuery" resultType="java.lang.Integer">
+    select count(*)
+    from student_t s
+    join class_t c
+    on s.cid = c.cid
+    join major_t m
+    on m.mno = c.mno
+    <where>
+      <include refid="query_items_where"/>
+    </where>
+  </select>
+
+  <select id="selectBySno" resultType="java.lang.Integer">
+    select count(*)
+    from student_t
+    where sno = #{arg0}
+  </select>
+
+  <select id="selectClassId" resultType="java.lang.Integer" parameterType="cn.cuit.exam.bean.Student">
+    select cid
+    from class_t
+    where mno = #{mno} and semester = #{semester} and cnt = #{cnt}
+  </select>
+
+  <select id="selectClassIdBySno" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select cid
+    from student_t
+    where sno = #{arg0}
+  </select>
+
+  <select id="selectMajorMno" resultType="java.lang.String">
+    select mno
+    from major_t
+    where mname = #{arg0}
+  </select>
+
+  <select id="selectMajorMshort" resultType="java.lang.String">
+    select mshort
+    from major_t
+    where mname = #{arg0}
+  </select>
+
+  <update id="addStuNum">
+    update class_t
+    set num = num + 1
+    where cid = #{arg0}
+  </update>
+
+  <update id="reduceStuNum">
+    update class_t
+    set num = num - 1
+    where cid in (select cid from student_t where sno = #{arg0})
+  </update>
+
+  <update id="updateStu" parameterType="cn.cuit.exam.bean.Student">
+    update student_t
+    set
+    <if test="sname != null">
+      sname = #{sname},
+    </if>
+    <if test="cid != null">
+      cid = #{cid}
+    </if>
+    where sno = #{sno}
+  </update>
+
+  <update id="updateUser" parameterType="cn.cuit.exam.bean.Student">
+    update user_t
+    set password = #{password}
+    where username = #{sno}
+  </update>
+
+  <insert id="insertClass" parameterType="cn.cuit.exam.bean.Student"
+          useGeneratedKeys="true" keyProperty="cid">
+    insert class_t(mno, semester, cnt, num)
+    values(#{mno}, #{semester}, #{cnt}, 1)
+  </insert>
+
+  <insert id="insertStu" parameterType="cn.cuit.exam.bean.Student">
+    insert student_t(sno, sname, cid)
+    values(#{sno}, #{sname}, #{cid})
+  </insert>
+
+  <insert id="insertUser" parameterType="cn.cuit.exam.bean.Student">
+    insert user_t(username, password, role)
+    values(#{sno}, #{password}, 'S')
+  </insert>
+
+  <delete id="deleteStu">
     delete from student_t
-    where Sno = #{sno,jdbcType=VARCHAR}
+    where sno = #{arg0}
   </delete>
-  <insert id="insert" parameterType="cn.cuit.exam.bean.Student">
-    insert into student_t (Sno, Sname, ClassName
-      )
-    values (#{sno,jdbcType=VARCHAR}, #{sname,jdbcType=VARCHAR}, #{classname,jdbcType=VARCHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="cn.cuit.exam.bean.Student">
-    insert into student_t
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="sno != null">
-        Sno,
-      </if>
-      <if test="sname != null">
-        Sname,
-      </if>
-      <if test="classname != null">
-        ClassName,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="sno != null">
-        #{sno,jdbcType=VARCHAR},
-      </if>
-      <if test="sname != null">
-        #{sname,jdbcType=VARCHAR},
-      </if>
-      <if test="classname != null">
-        #{classname,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.cuit.exam.bean.Student">
-    update student_t
-    <set>
-      <if test="sname != null">
-        Sname = #{sname,jdbcType=VARCHAR},
-      </if>
-      <if test="classname != null">
-        ClassName = #{classname,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where Sno = #{sno,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.cuit.exam.bean.Student">
-    update student_t
-    set Sname = #{sname,jdbcType=VARCHAR},
-      ClassName = #{classname,jdbcType=VARCHAR}
-    where Sno = #{sno,jdbcType=VARCHAR}
-  </update>
+
+  <delete id="deleteUser">
+    delete from user_t
+    where username = #{arg0}
+  </delete>
 </mapper>
