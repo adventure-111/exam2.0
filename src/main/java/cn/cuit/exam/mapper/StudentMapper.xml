@@ -6,9 +6,6 @@
     <cache />
 
     <sql id="query_items_where" >
-        <if test="sno != null">
-            and sno = #{sno}
-        </if>
         <if test="sname != null">
             and sname like '%${sname}%'
         </if>
@@ -41,7 +38,7 @@
         on m.mno = c.mno
 
         <where>
-            <include refid="query_items_where"/>
+            <include refid="query_items_where"></include>
         </where>
 
         <if test="sort!=null and sort!=''">
@@ -66,7 +63,7 @@
         join major_t m
         on m.mno = c.mno
         <where>
-            <include refid="query_items_where"/>
+            <include refid="query_items_where"></include>
         </where>
     </select>
 

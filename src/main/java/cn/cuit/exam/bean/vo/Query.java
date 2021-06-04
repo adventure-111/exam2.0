@@ -9,7 +9,7 @@ public class Query {
     @ApiModelProperty(value = "排序字段", example = "sno", required = false)
     private String sort;
 
-    @ApiModelProperty(value = "排序方向", example = "DESC", required = false)
+    @ApiModelProperty(value = "排序方向", example = "desc", required = false)
     private String direction;
 
     @ApiModelProperty(value = "页面大小", example = "10", required = true)
