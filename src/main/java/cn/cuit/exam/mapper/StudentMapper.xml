@@ -6,9 +6,6 @@
   <cache />
 
   <sql id="query_items_where" >
-    <if test="sno != null">
-      and sno = #{sno}
-    </if>
     <if test="sname != null">
       and sname like '%${sname}%'
     </if>

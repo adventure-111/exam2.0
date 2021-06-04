@@ -1,6 +1,7 @@
 package cn.cuit.exam.mapper;
 
 import cn.cuit.exam.bean.Student;
+import cn.cuit.exam.bean.Teacher;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +15,8 @@ public class MapperTest {
 //    private MajorMapper majorMapper;
     @Autowired
     private StudentMapper studentMapper;
+    @Autowired
+    private TeacherMapper teacherMapper;
 
     @Test
     void selectBySno() {
@@ -26,4 +29,14 @@ public class MapperTest {
 //        studentMapper.insertClass()
     }
 
+    @Test
+    void addTeacher() {
+        Teacher teacher = new Teacher();
+        teacher.setSchool("软件工程");
+        teacher.setPassword("123");
+        teacher.setTno("0702002");
+        teacher.setTname("XXX");
+//        System.out.println(teacherMapper.addTeacher(teacher));
+        System.out.println(teacherMapper.addUser(teacher));
+    }
 }

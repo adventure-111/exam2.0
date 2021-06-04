@@ -47,7 +47,7 @@ class StudentServiceImplTest {
     @Test
     void updateStudent() {
         Student student = new Student();
-        student.setSno("2019000002");
+        student.setSno("2019000090");
         student.setSname("XXXX");
         student.setPassword("1234");
         student.setMname("软件工程");

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cuit.exam.mapper.TeacherMapper">
+    <sql id="query_items_where" >
+        <if test="tno != null">
+            and tno = #{tno}
+        </if>
+        <if test="tname != null">
+            and tname = #{tname}
+        </if>
+        <if test="school != null">
+            and school = #{school}
+        </if>
+    </sql>
+    
+    <select id="selectTeacher" resultType="cn.cuit.exam.bean.Teacher" parameterType="cn.cuit.exam.bean.vo.TeacherQuery">
+        select tno, tname, password, school, total, current, positivecnt, passivecnt
+        from teacher_t
+        join user_t
+        on tno = username
+        <where>
+            <include refid="query_items_where"></include>
+        </where>
+        <if test="sort!=null and sort!=''">
+            ORDER BY ${sort}
+        </if>
+        <if test="direction!=null and direction!=''">
+            ${direction}
+        </if>
+
+        <trim prefix="limit " >
+            <if test="pageNum != null, pageSize != null">
+                #{pageNum}, #{pageSize}
+            </if>
+        </trim>
+    </select>
+
+    <select id="selectTeacherByTno" resultType="cn.cuit.exam.bean.Teacher">
+        select tno, tname, password, school, total, current, positivecnt, passivecnt
+        from teacher_t
+        join user_t
+        on tno = username
+        where tno = #{arg0}
+    </select>
+
+    <select id="selectTeacherCount" resultType="java.lang.Integer" parameterType="cn.cuit.exam.bean.vo.TeacherQuery">
+        select count(*)
+        from teacher_t
+        join user_t
+        on tno = username
+        <where>
+            <include refid="query_items_where"></include>
+        </where>
+    </select>
+
+    <insert id="addTeacher" parameterType="cn.cuit.exam.bean.Teacher">
+        insert teacher_t(tno, tname, school)
+        values(#{tno}, #{tname}, #{school})
+    </insert>
+
+    <insert id="addUser" parameterType="cn.cuit.exam.bean.Teacher">
+        insert user_t(username, password, role)
+        value (#{tno}, #{password}, 'T')
+    </insert>
+
+    <update id="updateTeacher" parameterType="cn.cuit.exam.bean.Teacher">
+        update teacher_t
+        set tname = #{tname}
+        where tno = #{tno}
+    </update>
+
+    <update id="updateUser" parameterType="cn.cuit.exam.bean.Student">
+        update user_t
+        set password = #{password}
+        where username = #{tno}
+    </update>
+
+    <delete id="deleteTeacher">
+        delete from teacher_t
+        where tno = #{arg0}
+    </delete>
+
+    <delete id="deleteUser">
+        delete from user_t
+        where username = #{arg0}
+    </delete>
+</mapper>

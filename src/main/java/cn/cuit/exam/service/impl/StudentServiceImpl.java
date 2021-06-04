@@ -75,6 +75,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public void updateStudent(Student student) {
+        if ( studentMapper.selectBySno(student.getSno()) == 0 ) return;
         Integer cid_old = studentMapper.selectClassIdBySno(student.getSno());
         student.setMno(studentMapper.selectMajorMno(student.getMname()));
         Integer cid_new = studentMapper.selectClassId(student);
