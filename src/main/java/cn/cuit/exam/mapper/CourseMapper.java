@@ -23,6 +23,15 @@ public interface CourseMapper {
     //查询选修对应课程的人数
     Integer QueryNumOfSelected(String cno);
 
+    //添加课程
+    int InsertCourse(Course course);
+
+    //更新课程信息
+    int UpdateCourse(Course course);
+
+    //删除课程
+    int DeleteCourse(Course course);
+
     //添加授课关系
     int InsertTeach(Teach teach);
 

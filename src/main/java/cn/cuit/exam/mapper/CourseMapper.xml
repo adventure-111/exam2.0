@@ -55,8 +55,21 @@
         select COUNT(*) from course_t
     </select>
 
+    <update id="InsertCourse">
+        insert into course_t (cno, cname, type)
+        values (#{cno}, #{cname}, #{type});
+    </update>
+
+    <update id="UpdateCourse" parameterType="cn.cuit.exam.bean.Course">
+        update course_t set cname = #{cname} and type = #{type} where cno = #{cno}
+    </update>
+
+    <update id="DeleteCourse">
+        delete from course_t where cno = #{arg0}
+    </update>
+
     <update id="InsertTeach">
-        insert into teach_t
+        insert into teach_t (cno, cid, tno)
         values (#{cno}, #{cid}, #{tno})
     </update>
     
