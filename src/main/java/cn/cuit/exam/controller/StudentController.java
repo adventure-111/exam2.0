@@ -3,9 +3,13 @@ package cn.cuit.exam.controller;
 import cn.cuit.exam.bean.PageBean;
 import cn.cuit.exam.bean.Student;
 import cn.cuit.exam.bean.vo.StudentQuery;
+import cn.cuit.exam.mapper.StudentMapper;
+import cn.cuit.exam.mapper.UtilsMapper;
 import cn.cuit.exam.service.StudentService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +20,8 @@ import java.util.List;
 public class StudentController {
     @Autowired
     private StudentService studentService;
+    @Autowired
+    private UtilsMapper utilsMapper;
 
 
     @PostMapping("/student")
@@ -56,4 +62,16 @@ public class StudentController {
     public void updateStudent(@RequestBody Student student) {
         studentService.updateStudent(student);
     }
+
+    @GetMapping("/student/majorList")
+    @ApiOperation(value = "查询条件:专业下拉列表", notes = "传入参数示例：软件工程")
+    public List majorList(String school) {
+        return utilsMapper.selectMajorList(school);
+    }
+   @GetMapping("/student/semesterList")
+   @ApiOperation(value = "查询条件:年级下拉列表")
+   public List semesterList() {
+        return utilsMapper.selectSemesterList();
+   }
+
 }
