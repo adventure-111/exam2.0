@@ -3,9 +3,11 @@ package cn.cuit.exam.service;
 import cn.cuit.exam.bean.PageBean;
 import cn.cuit.exam.bean.Teacher;
 import cn.cuit.exam.bean.vo.TeacherQuery;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface TeacherService {
 
     /**
