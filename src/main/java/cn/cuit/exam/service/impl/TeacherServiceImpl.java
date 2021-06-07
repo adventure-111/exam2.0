@@ -23,7 +23,7 @@ public class TeacherServiceImpl implements TeacherService {
         // 查询教师集合
         List<Teacher> teacherList = teacherMapper.selectTeacher(teacherQuery);
         // 创建pageBean
-        PageBean<Teacher> pageBean = new PageBean<>(totalCount, teacherList, teacherQuery.getPageSize(), teacherQuery.getPageNum());
+        PageBean<Teacher> pageBean = new PageBean<Teacher>(totalCount, teacherList, teacherQuery.getPageSize(), teacherQuery.getPageNum());
 
         return pageBean;
     }

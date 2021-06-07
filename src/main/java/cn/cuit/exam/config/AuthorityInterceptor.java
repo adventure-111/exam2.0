@@ -15,7 +15,7 @@ import java.util.Set;
 public class AuthorityInterceptor implements HandlerInterceptor {
 
     // 不拦截的URI
-    private static final Set<String> NOT_INTERCEPTOR_URI = new HashSet<>();
+    private static final Set<String> NOT_INTERCEPTOR_URI = new HashSet<String>();
 
     static {
         NOT_INTERCEPTOR_URI.add("/admin/login.html");

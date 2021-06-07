@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 @MapperScan("cn.cuit.exam.mapper")
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class, scanBasePackages = {"cn.cuit.exam"})
+@SpringBootApplication
 public class ExamApplication {
 
     public static void main(String[] args) {
