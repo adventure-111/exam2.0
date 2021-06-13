@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cuit.exam.mapper.UtilsMapper">
+
+    <select id="selectMajorList" resultType="java.lang.String">
+        select mname
+        from major_t
+        where school = #{arg0}
+    </select>
+    
+    <select id="selectSemesterList" resultType="Integer">
+        select distinct semester
+        from class_t
+    </select>
+
+    <select id="selectClassNum" resultType="java.lang.Integer">
+        select num
+        from class_t c
+        join major_t m
+        on c.mno = m.mno
+        where mshort = #{mshort} and semester = #{semester} and cnt = #{cnt}
+    </select>
+
+    <select id="queryAdminByUsername" resultType="cn.cuit.exam.bean.Admin">
+        select username, password, school
+        from admin_t
+        where username = #{arg0}
+    </select>
+
+</mapper>

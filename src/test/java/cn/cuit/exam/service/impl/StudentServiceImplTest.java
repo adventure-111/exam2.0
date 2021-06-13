@@ -29,7 +29,7 @@ class StudentServiceImplTest {
     void addStudent() {
         Student student = new Student();
         student.setSno("2019000004");
-        student.setSname("XXX");
+        student.setSname("张三");
         student.setPassword("123");
         student.setMname("软件工程");
         student.setSemester(19);

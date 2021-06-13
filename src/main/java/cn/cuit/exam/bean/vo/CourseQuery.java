@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class CourseQuery extends StudentQuery{
+public class CourseQuery extends Query{
 
     @ApiModelProperty(value = "课程号", example = "CS005A")
     private String cno;

@@ -29,7 +29,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 
     protected void addInterceptor(InterceptorRegistry registry) {
         registry.addInterceptor(new AuthorityInterceptor())
-                .addPathPatterns("/exam/manage/**");
+                .addPathPatterns("/exam/admin/**");
         super.addInterceptors(registry);
     }
 }

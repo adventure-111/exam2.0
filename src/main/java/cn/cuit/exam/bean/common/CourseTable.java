@@ -1,0 +1,74 @@
+package cn.cuit.exam.bean.common;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class CourseTable {
+
+    private static List<CourseSection> table = new ArrayList<>();
+    private static List<ClassroomSection> classrooms = new ArrayList<>();
+
+    private Map<String, Integer> classnameToId = new HashMap<>();
+
+    /**
+     * 从.csv文件中获取课程表数据
+     */
+    public void importCourseTable(File file) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String instr = "";
+
+            while ((instr = reader.readLine()) != null) {
+                String[] strs = instr.split(",");
+                if (strs.length < 6) return;
+
+                CourseSection cs = new CourseSection();
+                ClassroomSection crs = new ClassroomSection(new int[140][170]);
+
+                //获取课程数据
+                cs.setClassname(strs[0]);
+                cs.setTname(strs[1]);
+                cs.setStWeek(Integer.parseInt(strs[2]));
+                cs.setEdWeek(Integer.parseInt(strs[3]));
+                cs.setWeekday(Integer.parseInt(strs[4]));
+                cs.setSite(strs[5]);
+
+                //节次数
+                List<Integer> occ = new ArrayList<>();
+                for (int i = 6; i < strs.length; ++i) occ.add(Integer.parseInt(strs[i]));
+
+                cs.setOccupy(occ);
+
+                //根据课程表更新教室情况
+                for (int i = cs.getStWeek(); i <= cs.getEdWeek(); ++i) {
+                    for (int st : cs.getOccupy()) {
+                        crs.update(i, cs.getWeekday(), st);
+                    }
+                }
+
+                //实现教室的按名存取
+                int id; //id为教室在classrooms里的编号
+                if (classnameToId.containsKey(cs.getClassname())) {
+                    id = classnameToId.get(cs.getClassname());
+                } else {
+                    id = classrooms.size();
+                    classrooms.add(crs);
+                    classnameToId.put(cs.getClassname(), id);
+                }
+
+                table.add(cs);
+            }
+
+            reader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("文件不存在！");
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+}
