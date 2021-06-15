@@ -21,4 +21,10 @@
         where mshort = #{mshort} and semester = #{semester} and cnt = #{cnt}
     </select>
 
+    <select id="queryAdminByUsername" resultType="cn.cuit.exam.bean.Admin">
+        select username, password, school
+        from admin_t
+        where username = #{arg0}
+    </select>
+
 </mapper>

@@ -4,9 +4,11 @@ import cn.cuit.exam.bean.Course;
 import cn.cuit.exam.bean.PageBean;
 import cn.cuit.exam.bean.Teach;
 import cn.cuit.exam.bean.vo.CourseQuery;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface CourseService {
 
     /**

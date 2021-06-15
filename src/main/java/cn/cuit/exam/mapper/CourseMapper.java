@@ -4,9 +4,11 @@ import cn.cuit.exam.bean.Course;
 import cn.cuit.exam.bean.Teach;
 import cn.cuit.exam.bean.vo.CourseQuery;
 import cn.cuit.exam.bean.vo.TeachQuery;
+import org.mapstruct.Mapper;
 
 import java.util.List;
 
+@Mapper
 public interface CourseMapper {
 
     // 查询课程

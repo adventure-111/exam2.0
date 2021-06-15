@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cuit.exam.mapper.ClassMapper">
+    <select id="queryByCid" parameterType="java.lang.Integer" resultType="cn.cuit.exam.bean.Class">
+        select * from class_t where cid = #{arg0}
+    </select>
+
+    <select id="queryClassWithCidAndNum" parameterType="cn.cuit.exam.bean.Class" resultType="cn.cuit.exam.bean.Class">
+        select * from class_t where mno = ${mno} and semester = #{semester} and cnt = #{cnt}
+    </select>
+</mapper>
