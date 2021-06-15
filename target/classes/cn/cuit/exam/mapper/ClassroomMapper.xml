@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cuit.exam.mapper.ClassroomMapper">
+    <select id="queryClassroomByTeachBuildingIdAndType" resultType="cn.cuit.exam.bean.Classroom">
+        select * from classroom_t where substr(site, 2, 1) = #{id} and type = #{type}
+    </select>
+</mapper>

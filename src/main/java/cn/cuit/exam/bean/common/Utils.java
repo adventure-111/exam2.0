@@ -1,12 +1,39 @@
 package cn.cuit.exam.bean.common;
 
 import cn.cuit.exam.bean.Class;
-import cn.cuit.exam.bean.Course;
+import cn.cuit.exam.mapper.ClassMapper;
+import cn.cuit.exam.mapper.MajorMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Calendar;
 import java.util.List;
 
 public class Utils {
+
+    //特定的考试时间，分别为8:30,14:00,18:30
+    public static int[] UsableTime = {6, 72, 126};
+
+    //每月的天数
+    public static int[] monthDay = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30,31};
+
+    //判断是否为闰年
+    public static boolean isLeapYear(int year) {
+        return year % 400 == 0 || (year % 4 == 0 && year % 100 != 0);
+    }
+
+    @Autowired
+    private static MajorMapper majorMapper;
+
+    @Autowired
+    private static ClassMapper classMapper;
+
+    public static MajorMapper getMajorMapper() {
+        return majorMapper;
+    }
+
+    public static ClassMapper getClassMapper() {
+        return classMapper;
+    }
 
     /**
      * 获取本学期第一周的第一天
@@ -64,22 +91,66 @@ public class Utils {
         long d = (date.getTimeInMillis() - startSem.getTimeInMillis()) / (1000 * 3600 * 24);//计算既定日期距初始日期的天数
         int d_axis = (int) d;
 
-        int[] vis = new int[170];
-        for (Class t : classes) {
-            Course[][] course = t.getCourses();
-            for (int i = 0; i < 11; ++i) {
-                if (course[d_axis][i] != null) {
-                    vis[Utils.getCourseSectionStartTime(i + 1)]++;
-                    vis[Utils.getCourseSectionStartTime(i + 9 + 1 + 1)]--;
+        duration /= 5;  //以5分钟为一个单位
+
+        //检测是否所有教室都在三个特定的考试时间点有空闲时段
+        int[] cnt = new int[3];
+
+
+        for (int i = 0; i < 3; ++i) cnt[i] = classes.size();
+        for (int i = 0; i < 3; ++i) {
+            for (Class t : classes) {
+                if (!t.isFree(Utils.getWeekByDate(date), Utils.getWeekdayByDate(date),
+                        Utils.UsableTime[i], UsableTime[i] + duration)) {
+                    cnt[i]--;
                 }
             }
         }
 
-        duration /= 5;
-        for (int i = 1; i < 170; ++i) {
-            vis[i] += vis[i - 1];
-            if (vis[i] >= duration) return true;
-        }
-        return false;
+        return cnt[0] == classes.size() || cnt[1] == classes.size() || cnt[2] == classes.size();
     }
+
+    /**
+     * 根据绝对时间获得相对时间
+     */
+    public static int getTimeAxis(Calendar time) {
+        long res = time.getTimeInMillis() % ((long) 24 * 3600 * 1000);
+        System.out.println(res);
+        res /= 60 * 1000;
+        return (int) (res / 5);
+    }
+
+    /**
+     * 非操作(!)
+     */
+    public static int getReverse(int x) {
+        if (x > 0) return 0;
+        else return 1;
+    }
+
+    /**
+     * 根据相对时间获得绝对时间
+     */
+    public static Calendar getCalenderByAxis(int axis) {
+        Calendar c = Calendar.getInstance();
+        c.clear();
+        c.set(Calendar.HOUR, axis / 12);
+        c.set(Calendar.MINUTE, axis % 12);
+        return c;
+    }
+
+    /**
+     * 根据日期获得相应的周数
+     */
+    public static int getWeekByDate(Calendar date) {
+        return (int) ((date.getTimeInMillis() - Utils.getInitDate().getTimeInMillis()) / (1000 * 3600 * 24 * 7) + 1);
+    }
+
+    /**
+     * 根据日期知道那天是星期几
+     */
+    public static int getWeekdayByDate(Calendar date) {
+        return (int) (((date.getTimeInMillis() - Utils.getInitDate().getTimeInMillis()) % (1000 * 3600 * 24 * 7)) / (1000 * 3600 * 24 + 1));
+    }
+
 }

@@ -12,21 +12,23 @@ public class ClassroomSection {
         this.occupy = occupy;
     }
 
-    public void update(int week, int weekday, int st) {
+    public void update(int week, int weekday, int st, int dur) {
         int x = (week - 1) * 7 + weekday - 1;
         occupy[x][Utils.getCourseSectionStartTime(st)]++;
-        occupy[x][Utils.getCourseSectionStartTime(st) + 9 + 1]--;
+        occupy[x][Utils.getCourseSectionStartTime(st) + dur + 1]--;
     }
 
-    public void refresh(int week, int weekday) {
+    /**
+     * 判断从st到ed的所有时间里是否都空闲
+     */
+    public boolean queryForFree(int week, int weekday, int st, int ed) {
         int x = (week - 1) * 7 + weekday - 1;
-        for (int i = 1; i < 170; ++i) occupy[x][i] += occupy[x][i - 1];
-    }
-
-    public void refreshAll() {
-        for (int x = 0; x < 140; ++x) {
-            for (int i = 1; i < 170; ++i) occupy[x][i] += occupy[x][i - 1];
+        int[] vis = new int[occupy[0].length];
+        vis[0] = Utils.getReverse(occupy[x][0]);
+        for (int i = 1; i <= ed; ++i) {
+            vis[i] = Utils.getReverse(occupy[x][i]) + vis[i - 1];
         }
+        return vis[ed] >= ed - st;
     }
 
 }

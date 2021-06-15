@@ -8,4 +8,6 @@ public interface ClassMapper {
 
     Class queryByCid(int cid);
 
+    Class queryClassWithCidAndNum(Class c);
+
 }

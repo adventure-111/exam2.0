@@ -18,3 +18,5 @@ soup = BeautifulSoup(driver.page_source, 'html')
 week = soup.find('label', id='xxxcon')
 print(week.get_text())
 
+driver.close()
+

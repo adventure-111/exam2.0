@@ -4,4 +4,8 @@
     <select id="queryByCid" parameterType="java.lang.Integer" resultType="cn.cuit.exam.bean.Class">
         select * from class_t where cid = #{arg0}
     </select>
+
+    <select id="queryClassWithCidAndNum" parameterType="cn.cuit.exam.bean.Class" resultType="cn.cuit.exam.bean.Class">
+        select * from class_t where mno = ${mno} and semester = #{semester} and cnt = #{cnt}
+    </select>
 </mapper>

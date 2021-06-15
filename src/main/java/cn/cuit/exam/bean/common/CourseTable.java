@@ -1,5 +1,9 @@
 package cn.cuit.exam.bean.common;
 
+import cn.cuit.exam.bean.Class;
+import cn.cuit.exam.mapper.ClassroomMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,15 +12,18 @@ import java.util.Map;
 
 public class CourseTable {
 
-    private static List<CourseSection> table = new ArrayList<>();
-    private static List<ClassroomSection> classrooms = new ArrayList<>();
+    @Autowired
+    private ClassroomMapper classroomMapper;
 
-    private Map<String, Integer> classnameToId = new HashMap<>();
+    public static final List<CourseSection> table = new ArrayList<>();
+    public static final List<ClassroomSection> classrooms = new ArrayList<>();
+
+    public static final Map<String, Integer> classnameToId = new HashMap<>();
 
     /**
      * 从.csv文件中获取课程表数据
      */
-    public void importCourseTable(File file) {
+    public static void importCourseTable(File file) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String instr = "";
@@ -29,23 +36,25 @@ public class CourseTable {
                 ClassroomSection crs = new ClassroomSection(new int[140][170]);
 
                 //获取课程数据
-                cs.setClassname(strs[0]);
-                cs.setTname(strs[1]);
-                cs.setStWeek(Integer.parseInt(strs[2]));
-                cs.setEdWeek(Integer.parseInt(strs[3]));
-                cs.setWeekday(Integer.parseInt(strs[4]));
-                cs.setSite(strs[5]);
+                cs.setClassAbbr(strs[0]);
+                cs.setClassname(strs[1]);
+                cs.setTname(strs[2]);
+                cs.setStWeek(Integer.parseInt(strs[3]));
+                cs.setEdWeek(Integer.parseInt(strs[4]));
+                cs.setWeekday(Integer.parseInt(strs[5]));
+                cs.setSite(strs[6]);
 
                 //节次数
                 List<Integer> occ = new ArrayList<>();
-                for (int i = 6; i < strs.length; ++i) occ.add(Integer.parseInt(strs[i]));
+                for (int i = 7; i < strs.length; ++i) occ.add(Integer.parseInt(strs[i]));
 
                 cs.setOccupy(occ);
 
                 //根据课程表更新教室情况
                 for (int i = cs.getStWeek(); i <= cs.getEdWeek(); ++i) {
                     for (int st : cs.getOccupy()) {
-                        crs.update(i, cs.getWeekday(), st);
+                        //更新教室使用情况
+                        crs.update(i, cs.getWeekday(), st, 9);
                     }
                 }
 
@@ -61,7 +70,6 @@ public class CourseTable {
 
                 table.add(cs);
             }
-
             reader.close();
         } catch (FileNotFoundException e) {
             System.out.println("文件不存在！");
@@ -69,6 +77,8 @@ public class CourseTable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        System.out.println(table);
     }
 
 }

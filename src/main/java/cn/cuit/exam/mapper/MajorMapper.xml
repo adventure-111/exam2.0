@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cuit.exam.mapper.MajorMapper">
+    <select id="getMshortByMno" resultType="java.lang.String">
+        select mshort from major_t where mno = #{arg0}
+    </select>
+</mapper>
