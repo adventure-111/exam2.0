@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/examdb?useSSL=false&serverTimezone=UTC&characterEncoding=utf-8&autoReconnect=true
+    username: root
+    password: My20001213
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  resources:
+    static-locations: classpath:/templates
+server:
+  servlet:
+    context-path: /exam
+
+#声明thymeleaf使用非严格的html。
+thymeleaf:
+  content-type: text/html
+  mode: LEGACYHTML5
+  cache: false
+
+#mybatis日志
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

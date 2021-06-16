@@ -1,0 +1,8 @@
+cn\cuit\exam\mapper\CourseMapperTest.class
+cn\cuit\exam\service\impl\StudentServiceImplTest.class
+cn\cuit\exam\ExamApplicationTests.class
+cn\cuit\exam\mapper\MapperTest.class
+cn\cuit\exam\service\StudentServiceImplTest.class
+cn\cuit\exam\mapper\UtilsMapperTest.class
+cn\cuit\exam\service\impl\CourseServiceImplTest.class
+cn\cuit\exam\service\impl\TeacherServiceImplTest.class
