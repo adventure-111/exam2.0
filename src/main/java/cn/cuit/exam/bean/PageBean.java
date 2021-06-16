@@ -45,6 +45,7 @@ public class PageBean<Map> {
     }
 
     public int getTotalPage() {
+        setTotalPage();
         return totalPage;
     }
 
@@ -59,7 +60,7 @@ public class PageBean<Map> {
     }
 
     public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
+        this.pageNum = pageNum+1;
     }
 
     public List<Map> getList() {

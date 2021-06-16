@@ -15,7 +15,6 @@ public class CourseQuery extends Query{
     @ApiModelProperty(value = "类型", example = "1")
     private int type;
 
-    @ApiModelProperty(hidden = true)
-    int num;
-
+    @ApiModelProperty(value = "学院名", example = "软件工程")
+    private String school;
 }

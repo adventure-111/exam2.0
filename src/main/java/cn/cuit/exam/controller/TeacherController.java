@@ -1,5 +1,6 @@
 package cn.cuit.exam.controller;
 
+import cn.cuit.exam.bean.ExcelUtils;
 import cn.cuit.exam.bean.PageBean;
 import cn.cuit.exam.bean.Student;
 import cn.cuit.exam.bean.Teacher;
@@ -13,8 +14,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Api(value = "教师数据维护", description = "教师数据维护")
@@ -39,6 +42,16 @@ public class TeacherController {
 
         return count;
     }
+
+    @PutMapping("/teacher/import")
+    @ApiOperation(value = "添加教师(导入文件)",
+                    notes = "文件示例：工号 姓名 密码")
+    public Map importTeacher(@RequestPart(value = "file") MultipartFile file, String school) {
+        List<Teacher> list = ExcelUtils.readExcel("", Teacher.class, file);
+        Map map = teacherService.addTeacherList(list, school);
+        return map;
+    }
+
 
     @DeleteMapping("/teacher")
     @ApiOperation(value = "删除教师")

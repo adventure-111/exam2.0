@@ -1,6 +1,5 @@
 package cn.cuit.exam.mapper;
 
-import cn.cuit.exam.bean.Admin;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,9 +14,25 @@ public interface UtilsMapper {
     List<Integer> selectSemesterList();
 
     // 查询班级人数
-    Integer selectClassNum(@Param("mshort") String mshort, @Param("semester")Integer semester, @Param("cnt")Integer cnt);
+    Integer getClassNum(@Param("mshort") String mshort, @Param("semester")Integer semester, @Param("cnt")Integer cnt);
 
-    // 根据用户名查找管理员
-    Admin queryAdminByUsername(String username);
+    // 查询班级人数通过cid
+    Integer getClassNumByCid(Integer cid);
+
+    // 通过course_name查询cno
+    String getCnoByCoursename(String cname);
+
+    // 通过tname查询tno
+    String getTnoByTname(String tname);
+
+    // 查询班级cid
+    Integer getClassId(@Param("mshort") String mshort, @Param("semester")Integer semester, @Param("cnt")Integer cnt);
+
+    // 通过专业名查询专业号
+    String getMajorMnoByMname(String mname);
+
+    // 通过专业简称获取专业号
+    String getMajorMnoByMshort(String mshort);
+
 
 }

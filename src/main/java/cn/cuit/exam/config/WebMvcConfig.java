@@ -1,11 +1,13 @@
 package cn.cuit.exam.config;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.util.UrlPathHelper;
 
 @Configuration
-public class WebMvcConfig extends WebMvcConfigurationSupport {
+public class WebMvcConfig implements WebMvcConfigurer {
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("swagger-ui.html")
@@ -25,11 +27,5 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         //不移除url中分号后面中的内容
         urlPathHelper.setRemoveSemicolonContent(false);
         configurer.setUrlPathHelper(urlPathHelper);
-    }
-
-    protected void addInterceptor(InterceptorRegistry registry) {
-        registry.addInterceptor(new AuthorityInterceptor())
-                .addPathPatterns("/exam/admin/**");
-        super.addInterceptors(registry);
     }
 }

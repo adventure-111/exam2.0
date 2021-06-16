@@ -70,20 +70,6 @@
                enableSelectByExample="false"
                selectByExampleQueryId="false" />
 
-        <table tableName="class_t" domainObjectName="Class"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false" />
-
-        <table tableName="classroom_t" domainObjectName="Classroom"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false" />
-
     </context>
 </generatorConfiguration>
 

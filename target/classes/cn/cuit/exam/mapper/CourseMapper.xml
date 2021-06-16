@@ -4,43 +4,54 @@
 
     <cache/>
 
-    <sql id="query_course">
-        <if test="cname != null">
+    <sql id="query_items_where" >
+        <if test="cno != null">
             and cno = #{cno}
         </if>
         <if test="cname != null">
-            and cname = #{cname}
+            and cname like '%${cname}$%'
         </if>
-        <if test="type != 0">
+        <if test="type != null and type != 0">
             and type = #{type}
         </if>
     </sql>
 
-    <sql id="query_teach">
-        <if test="cno != null">
-            and cno = #{cno}
-        </if>
-        <if test="tno != null">
-            and tno = #{tno}
-        </if>
-        <if test="cid != 0">
-            and cid = #{cid}
-        </if>
-    </sql>
+    <select id="selectCourseCount" resultType="java.lang.Integer" parameterType="cn.cuit.exam.bean.vo.CourseQuery">
+        select count(*)
+        from course_t co
+        join teach_t t
+        on co.cno = t.cno
+        join class_t c
+        on c.cid = t.cid
+        join teacher_t te
+        on t.tno = te.tno
+        join major_t m
+        on m.mno = c.mno
+        where m.school = #{school}
+    </select>
 
-    <select id="queryCourse" parameterType="cn.cuit.exam.bean.vo.CourseQuery" resultType="cn.cuit.exam.bean.Course">
-        select c.cno, c.cname, c.type, SUM(s.num)
-        FROM course_t c
-        JOIN class_t s, teach_t t
-        on c.cno = t.cno and s.cid = t.cid
+    <select id="selectCourse" resultType="cn.cuit.exam.bean.Course" parameterType="cn.cuit.exam.bean.vo.CourseQuery">
+        select co.cno, cname, type, sum(num) as num
+        from course_t co
+        join teach_t t
+        on co.cno = t.cno
+        join class_t c
+        on c.cid = t.cid
+        join teacher_t te
+        on t.tno = te.tno
+        join major_t m
+        on m.mno = c.mno
         <where>
-            <include refid="query_course"/>
+            <include refid="query_items_where"></include>
+            and m.school = #{school}
         </where>
 
-        <if test="sort != null and sort != ''">
+        group by co.cno
+
+        <if test="sort!=null and sort!=''">
             ORDER BY ${sort}
         </if>
-        <if test="direction != null direction != ''">
+        <if test="direction!=null and direction!=''">
             ${direction}
         </if>
 
@@ -51,58 +62,155 @@
         </trim>
     </select>
 
-    <select id="queryByCno" parameterType="java.lang.String" resultType="cn.cuit.exam.bean.Course">
-        select cno, cname, type from course_t where cno = #{arg0}
-    </select>
-
-    <select id="queryByCname" parameterType="java.lang.String" resultType="cn.cuit.exam.bean.Course">
-        select cno, cname, type from course_t where cname = #{arg0}
-    </select>
-
-    <select id="queryByType" parameterType="java.lang.Integer" resultType="cn.cuit.exam.bean.Course">
-        select cno, cname, type from course_t where type = #{arg0}
-    </select>
-
-    <select id="QueryNumOfSelected" parameterType="java.lang.String" resultType="java.lang.Integer">
-        select COUNT(*) from course_t where cno=${arg0}
-    </select>
-
-    <update id="InsertCourse">
-        insert into course_t (cno, cname, type)
-        values (#{cno}, #{cname}, #{type});
-    </update>
-
-    <update id="UpdateCourse" parameterType="cn.cuit.exam.bean.Course">
-        update course_t set cname = #{cname} and type = #{type} where cno = #{cno}
-    </update>
-
-    <update id="DeleteCourse">
-        delete from course_t where cno = #{arg0}
-    </update>
-
-    <select id="queryTeach" parameterType="cn.cuit.exam.bean.vo.TeachQuery" resultType="cn.cuit.exam.bean.Teach">
-        select cno, tno, cid from teach_t
+    <select id="selectAllSchoolCourseCount" resultType="java.lang.Integer" parameterType="cn.cuit.exam.bean.vo.CourseQuery">
+        select count(*)
+        from course_t
         <where>
-            <include refid="query_teach"/>
+            <include refid="query_items_where"></include>
         </where>
     </select>
 
-    <update id="InsertTeach">
-        insert into teach_t (cno, cid, tno)
-        values (#{cno}, #{cid}, #{tno})
+    <select id="selectAllSchoolCourse" resultType="cn.cuit.exam.bean.Course" parameterType="cn.cuit.exam.bean.vo.CourseQuery">
+        select cno, cname, type, 0 as num
+        from course_t
+        <where>
+            <include refid="query_items_where"></include>
+        </where>
+
+        <if test="sort!=null and sort!=''">
+            ORDER BY ${sort}
+        </if>
+        <if test="direction!=null and direction!=''">
+            ${direction}
+        </if>
+
+        <trim prefix="limit " >
+            <if test="pageNum != null, pageSize != null">
+                #{pageNum}, #{pageSize}
+            </if>
+        </trim>
+    </select>
+
+    <select id="selectTeachCount" resultType="java.lang.Integer" parameterType="cn.cuit.exam.bean.vo.TeachQuery">
+        select count(*)
+        from teach_t t
+        join class_t c
+        on c.cid = t.cid
+        join major_t m
+        on m.mno = c.mno
+        where t.cno = #{cno} and m.school = #{school}
+        <if test="sort!=null and sort!=''">
+            ORDER BY ${sort}
+        </if>
+        <if test="direction!=null and direction!=''">
+            ${direction}
+        </if>
+
+        <trim prefix="limit " >
+            <if test="pageNum != null, pageSize != null">
+                #{pageNum}, #{pageSize}
+            </if>
+        </trim>
+    </select>
+
+    <select id="selectTeach" resultType="cn.cuit.exam.bean.Teach" parameterType="cn.cuit.exam.bean.vo.TeachQuery">
+        select GROUP_CONCAT(mshort, semester, cnt) as class_name, tname, t.tno, c.cid
+        from teach_t t
+        join class_t c
+        on c.cid = t.cid
+        join major_t m
+        on m.mno = c.mno
+        join teacher_t te
+        on te.tno = t.tno
+        where t.cno = #{cno} and m.school = #{school}
+        <if test="sort!=null and sort!=''">
+            ORDER BY ${sort}
+        </if>
+        <if test="direction!=null and direction!=''">
+            ${direction}
+        </if>
+        group by c.cid, t.tno
+        <trim prefix="limit " >
+            <if test="pageNum != null, pageSize != null">
+                #{pageNum}, #{pageSize}
+            </if>
+        </trim>
+
+    </select>
+
+    <select id="getAllCno"  resultType="java.lang.String" >
+        select cno from course_t;
+    </select>
+
+    <select id="getCourseByCno" parameterType="java.lang.String" resultType="cn.cuit.exam.bean.Course">
+        select cno, cname, type from course_t where cno = #{arg0}
+    </select>
+
+    <select id="getTeach" parameterType="cn.cuit.exam.bean.Teach" resultType="cn.cuit.exam.bean.Teach">
+        select * from teach_t where tno = #{tno} and cno = #{cno} and cid = #{cid}
+    </select>
+
+    <select id="hasClassInOtherSchool" resultType="java.lang.Integer">
+        select t.cid
+        from course_t
+        join teach_t t
+        on t.cno = course_t.cno
+        join class_t
+        on t.cid = class_t.cid
+        join major_t
+        on major_t.mno = class_t.mno
+        where school != #{school} and t.cno = #{cno}
+    </select>
+
+    <insert id="insertCourse" parameterType="cn.cuit.exam.bean.Course" >
+        insert course_t(cno, cname, type)
+        values ( #{cno}, #{cname}, #{type} )
+    </insert>
+
+    <insert id="insertTeach" parameterType="cn.cuit.exam.bean.Teach">
+        insert teach_t(cno, cid, tno)
+        values ( #{cno}, #{cid}, #{tno} )
+    </insert>
+
+    <delete id="deleteCourse">
+        delete from course_t
+        where cno = #{arg0}
+    </delete>
+
+    <delete id="deleteTeachBySchoolCourse">
+        delete teach_t
+		from course_t, class_t, major_t, teach_t
+        where major_t.mno = class_t.mno
+                and teach_t.cno = course_t.cno
+				and teach_t.cid = class_t.cid
+                and school = #{school} and teach_t.cno = #{cno};
+    </delete>
+
+<!--    <delete id="deleteTeach">-->
+<!--        delete from teach_t-->
+<!--        where cno = #{arg0}-->
+<!--        <if test="cid != null">-->
+<!--        and cid = #{arg1}-->
+<!--        </if>-->
+<!--    </delete>-->
+
+    <update id="updateCourse" parameterType="cn.cuit.exam.bean.Course">
+        update course_t
+        <trim prefix="set">
+            <if test=" cname != null ">
+                cname = #{cname},
+            </if>
+            <if test=" type != null " >
+                type = #{type}
+            </if>
+        </trim>
+        where
+            cno = #{cno}
     </update>
 
-    <update id="DeleteTeach" parameterType="cn.cuit.exam.bean.Teach">
+   <delete id="deleteTeach" parameterType="cn.cuit.exam.bean.Teach">
         delete from teach_t
-        where cno  = #{cno} and tno = #{tno} and cid = #{cid}
-    </update>
-
-    <update id="DeleteTeachByCno">
-        delete from teach_t where cno = #{arg0}
-    </update>
-
-    <update id="DeleteTeachByTno">
-        delete from teach_t where tno = #{arg0}
-    </update>
+        where cno = #{cno} and cid = #{cid} and tno = #{tno}
+   </delete>
 
 </mapper>

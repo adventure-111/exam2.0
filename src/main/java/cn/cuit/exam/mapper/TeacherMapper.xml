@@ -84,4 +84,8 @@
         delete from user_t
         where username = #{arg0}
     </delete>
+    
+    <update id="addTotalByOne">
+        update teacher_t set total = total + 1 where tno = #{arg0}
+    </update>
 </mapper>

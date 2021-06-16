@@ -1,13 +1,13 @@
 package cn.cuit.exam.service;
 
 import cn.cuit.exam.bean.PageBean;
+import cn.cuit.exam.bean.Student;
 import cn.cuit.exam.bean.Teacher;
 import cn.cuit.exam.bean.vo.TeacherQuery;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
-@Service
 public interface TeacherService {
 
     /**
@@ -23,6 +23,13 @@ public interface TeacherService {
      * @return
      */
     int addTeacher(Teacher teacher);
+
+    /**
+     * 批量添加教师
+     * @param teacherList
+     * @return
+     */
+    Map addTeacherList(List<Teacher> teacherList, String school);
 
     /**
      * 更新教师信息

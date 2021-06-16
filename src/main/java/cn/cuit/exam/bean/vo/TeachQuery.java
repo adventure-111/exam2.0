@@ -1,15 +1,12 @@
 package cn.cuit.exam.bean.vo;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class TeachQuery extends Query{
+    @ApiModelProperty(value = "课程号(必传)")
     private String cno;
-    private String tno;
-    private int cid;
+    @ApiModelProperty(value = "学院名(必穿)")
+    private String school;
 }

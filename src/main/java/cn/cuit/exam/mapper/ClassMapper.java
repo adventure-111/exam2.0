@@ -1,13 +1,13 @@
 package cn.cuit.exam.mapper;
 
-import cn.cuit.exam.bean.Class;
-import org.mapstruct.Mapper;
+import cn.cuit.exam.bean.Klass;
+import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface ClassMapper {
 
-    Class queryByCid(int cid);
+    Klass queryByCid(int cid);
 
-    Class queryClassWithCidAndNum(Class c);
+    Klass queryClassWithCidAndNum(Klass c);
 
 }

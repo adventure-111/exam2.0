@@ -1,6 +1,6 @@
 package cn.cuit.exam.bean.common;
 
-import cn.cuit.exam.bean.Class;
+import cn.cuit.exam.bean.Klass;
 import cn.cuit.exam.mapper.ClassMapper;
 import cn.cuit.exam.mapper.MajorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +22,10 @@ public class Utils {
     }
 
     @Autowired
-    private static MajorMapper majorMapper;
+    public static MajorMapper majorMapper;
 
     @Autowired
-    private static ClassMapper classMapper;
+    public static ClassMapper classMapper;
 
     public static MajorMapper getMajorMapper() {
         return majorMapper;
@@ -86,7 +86,7 @@ public class Utils {
      * 根据选定班级，选定日期，考试时长确定当下选定的班级之间是否能腾出一个共同的时间段
      * 当天是指当天的8:00~22:00
      */
-    public static boolean isClassTimeScheduleConflict(List<Class> classes, Calendar date, int duration) {
+    public static boolean isClassTimeScheduleConflict(List<Klass> classes, Calendar date, int duration) {
         Calendar startSem = Utils.getInitDate();  //获取本学期的第一天的日期
         long d = (date.getTimeInMillis() - startSem.getTimeInMillis()) / (1000 * 3600 * 24);//计算既定日期距初始日期的天数
         int d_axis = (int) d;
@@ -99,7 +99,7 @@ public class Utils {
 
         for (int i = 0; i < 3; ++i) cnt[i] = classes.size();
         for (int i = 0; i < 3; ++i) {
-            for (Class t : classes) {
+            for (Klass t : classes) {
                 if (!t.isFree(Utils.getWeekByDate(date), Utils.getWeekdayByDate(date),
                         Utils.UsableTime[i], UsableTime[i] + duration)) {
                     cnt[i]--;
