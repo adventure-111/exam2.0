@@ -1,19 +1,19 @@
 package cn.cuit.exam.controller;
 
+import cn.cuit.exam.bean.ExcelUtils;
 import cn.cuit.exam.bean.PageBean;
 import cn.cuit.exam.bean.Student;
 import cn.cuit.exam.bean.vo.StudentQuery;
-import cn.cuit.exam.mapper.StudentMapper;
 import cn.cuit.exam.mapper.UtilsMapper;
 import cn.cuit.exam.service.StudentService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Api(value = "学生数据维护", description = "学生数据维护")
@@ -39,6 +39,21 @@ public class StudentController {
         int count = studentService.addStudent(student);
 
         return count;
+    }
+
+    @PutMapping("/student/import")
+    @ApiOperation(value = "添加学生(导入文件)",
+            notes = "文件示例：学号 姓名 密码 专业 年级 班级号\n",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Map importStudent(@RequestPart(value = "file") MultipartFile file) {
+//        long t1 = System.currentTimeMillis();
+//        long t2 = System.currentTimeMillis();
+//        System.out.println(String.format("read over! cost:%sms", (t2 - t1)));
+        List<Student> list = ExcelUtils.readExcel("", Student.class, file);
+//        System.out.println(list);
+        Map map = studentService.addStudentList(list);
+
+        return map;
     }
 
     @DeleteMapping("/student")
@@ -68,10 +83,11 @@ public class StudentController {
     public List majorList(String school) {
         return utilsMapper.selectMajorList(school);
     }
-   @GetMapping("/student/semesterList")
-   @ApiOperation(value = "查询条件:年级下拉列表")
-   public List semesterList() {
-        return utilsMapper.selectSemesterList();
-   }
+
+    @GetMapping("/student/semesterList")
+    @ApiOperation(value = "查询条件:年级下拉列表")
+    public List semesterList() {
+         return utilsMapper.selectSemesterList();
+    }
 
 }

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cuit.exam.mapper.CourseMapper">
+
+    <cache/>
+
+    <sql id="query_course">
+        <if test="cname != null">
+            and cno = #{cno}
+        </if>
+        <if test="cname != null">
+            and cname = #{cname}
+        </if>
+        <if test="type != 0">
+            and type = #{type}
+        </if>
+    </sql>
+
+    <sql id="query_teach">
+        <if test="cno != null">
+            and cno = #{cno}
+        </if>
+        <if test="tno != null">
+            and tno = #{tno}
+        </if>
+        <if test="cid != 0">
+            and cid = #{cid}
+        </if>
+    </sql>
+
+    <select id="queryCourse" parameterType="cn.cuit.exam.bean.vo.CourseQuery" resultType="cn.cuit.exam.bean.Course">
+        select c.cno, c.cname, c.type, SUM(s.num)
+        FROM course_t c
+        JOIN class_t s, teach_t t
+        on c.cno = t.cno and s.cid = t.cid
+        <where>
+            <include refid="query_course"/>
+        </where>
+
+        <if test="sort != null and sort != ''">
+            ORDER BY ${sort}
+        </if>
+        <if test="direction != null direction != ''">
+            ${direction}
+        </if>
+
+        <trim prefix="limit " >
+            <if test="pageNum != null, pageSize != null">
+                #{pageNum}, #{pageSize}
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryByCno" parameterType="java.lang.String" resultType="cn.cuit.exam.bean.Course">
+        select cno, cname, type from course_t where cno = #{arg0}
+    </select>
+
+    <select id="queryByCname" parameterType="java.lang.String" resultType="cn.cuit.exam.bean.Course">
+        select cno, cname, type from course_t where cname = #{arg0}
+    </select>
+
+    <select id="queryByType" parameterType="java.lang.Integer" resultType="cn.cuit.exam.bean.Course">
+        select cno, cname, type from course_t where type = #{arg0}
+    </select>
+
+    <select id="queryNumOfSelected" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select COUNT(*) from course_t where cno=${arg0}
+    </select>
+
+    <update id="insertCourse">
+        insert into course_t (cno, cname, type)
+        values (#{cno}, #{cname}, #{type});
+    </update>
+
+    <update id="updateCourse" parameterType="cn.cuit.exam.bean.Course">
+        update course_t set cname = #{cname} and type = #{type} where cno = #{cno}
+    </update>
+
+    <update id="deleteCourse">
+        delete from course_t where cno = #{arg0}
+    </update>
+
+    <select id="queryTeach" parameterType="cn.cuit.exam.bean.vo.TeachQuery" resultType="cn.cuit.exam.bean.Teach">
+        select cno, tno, cid from teach_t
+        <where>
+            <include refid="query_teach"/>
+        </where>
+    </select>
+
+    <update id="insertTeach">
+        insert into teach_t (cno, cid, tno)
+        values (#{cno}, #{cid}, #{tno})
+    </update>
+
+    <update id="deleteTeach" parameterType="cn.cuit.exam.bean.Teach">
+        delete from teach_t
+        where cno  = #{cno} and tno = #{tno} and cid = #{cid}
+    </update>
+
+    <update id="deleteTeachByCno">
+        delete from teach_t where cno = #{arg0}
+    </update>
+
+    <update id="deleteTeachByTno">
+        delete from teach_t where tno = #{arg0}
+    </update>
+
+</mapper>

@@ -1,6 +1,5 @@
 package cn.cuit.exam.bean.common;
 
-import cn.cuit.exam.bean.Class;
 import cn.cuit.exam.mapper.ClassroomMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 

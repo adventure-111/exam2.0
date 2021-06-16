@@ -1,7 +1,7 @@
 package cn.cuit.exam.service.impl;
 
-import cn.cuit.exam.bean.Class;
 import cn.cuit.exam.bean.Exam;
+import cn.cuit.exam.bean.Klass;
 import cn.cuit.exam.bean.common.CourseTable;
 import cn.cuit.exam.mapper.ClassMapper;
 import cn.cuit.exam.service.ExamService;
@@ -27,9 +27,9 @@ public class ExamServiceImplTest {
     void test1() {
         File file = new File("src/test/data/data.csv");
         CourseTable.importCourseTable(file);
-        List<Class> classList = new ArrayList<>();
+        List<Klass> classList = new ArrayList<>();
         for (int i = 1; i <= 5; ++i) {
-            Class temp = classMapper.queryByCid(i);
+           Klass temp = classMapper.queryByCid(i);
             temp.setOccupy(new int[140][170]);
             classList.add(temp);
         }

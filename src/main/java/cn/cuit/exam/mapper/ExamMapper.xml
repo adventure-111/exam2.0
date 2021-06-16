@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cuit.exam.mapper.ExamMapper">
+
+    <cache/>
+
+    <select id="getClassList" resultType="cn.cuit.exam.bean.Klass" parameterType="java.lang.String">
+        select
+            c.cid, mshort, semester, cnt
+        FROM class_t c
+        JOIN major_t m
+        on m.mno = c.mno
+        join teach_t t
+        on t.cid = c.cid
+        where school = #{school} and cno = #{cno}
+    </select>
+
+</mapper>
