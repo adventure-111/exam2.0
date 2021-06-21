@@ -18,4 +18,9 @@ public class TeacherMapperTest {
         System.out.println(teacherMapper.selectTeacher(teacherQuery));
     }
 
+    @Test
+    void test2() {
+        System.out.println(teacherMapper.selectSchoolByTno("ajx"));
+    }
+
 }

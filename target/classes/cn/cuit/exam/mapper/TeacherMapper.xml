@@ -88,4 +88,8 @@
     <update id="addTotalByOne">
         update teacher_t set total = total + 1 where tno = #{arg0}
     </update>
+
+    <select id="selectSchoolByTno" resultType="java.lang.String">
+        select school from teacher_t where tno=#{arg0}
+    </select>
 </mapper>

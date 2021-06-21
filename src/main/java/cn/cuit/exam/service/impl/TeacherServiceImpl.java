@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 
 @Service
 public class TeacherServiceImpl implements TeacherService {
@@ -77,5 +78,25 @@ public class TeacherServiceImpl implements TeacherService {
         for ( String tno : tnoList ) {
             deleteTeacher(tno);
         }
+    }
+
+    @Override
+    public PriorityQueue<Teacher> getMinHeapBySchool(String school) {
+        // 教师小顶堆
+        PriorityQueue<Teacher> teacherQueue = new PriorityQueue<>(
+                (o1, o2) -> {
+                    if (o1.getTotal().equals(o2.getTotal())) {
+                        return o2.getPassivecnt() - o1.getPassivecnt();
+                    } else {
+                        return o2.getTotal() - o1.getTotal();
+                    }
+                }
+        );
+
+        // 获取所有教师
+        TeacherQuery tq = new TeacherQuery();
+        tq.setSchool(school);
+        teacherQueue.addAll(teacherMapper.selectTeacher(tq));
+        return teacherQueue;
     }
 }

@@ -1,6 +1,7 @@
 package cn.cuit.exam.bean.common;
 
 import cn.cuit.exam.bean.Exam;
+import cn.cuit.exam.bean.Teacher;
 import io.swagger.models.auth.In;
 
 import java.util.*;
@@ -15,5 +16,8 @@ public class ExamUtils {
 
     //(eno, List<Site>)对照表
     public static Map<Integer, List<String>> ClassroomExamMap = new HashMap<>();
+
+    //(eno, List<tno>)对照表
+    public static Map<Integer, List<String>> TeacherExamMap = new HashMap<>();
 
 }

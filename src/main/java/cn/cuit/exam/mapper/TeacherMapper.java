@@ -29,6 +29,9 @@ public interface TeacherMapper {
     // 更新用户表
     int updateUser(Teacher teacher);
 
+    // 根据工号获取教师所属的学院
+    String selectSchoolByTno(String tno);
+
     // 增加历史监考次数+1
     int addTotalByOne(String tno);
 

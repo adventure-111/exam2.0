@@ -7,6 +7,7 @@ import cn.cuit.exam.bean.vo.TeacherQuery;
 
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 
 public interface TeacherService {
 
@@ -51,5 +52,7 @@ public interface TeacherService {
      * @return
      */
     void deleteTeacherList(List<String> tnoList);
+
+    PriorityQueue<Teacher> getMinHeapBySchool(String school);
 }
 

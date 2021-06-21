@@ -25,37 +25,27 @@ public class Exam implements Serializable {
     private String site;
 
     @ApiModelProperty(value = "考试日期", hidden = true)
-    private Calendar day;
-    @ApiModelProperty(value = "考试日期", example = "2021-6-30")
-    private String d_ay;
-    private Calendar start;
+    private Calendar day;   //有效值（年、月、日）
+
+    private Calendar start; //有效值（时、分）
     private Calendar end;
-    @ApiModelProperty(value = "考试时长（分钟）", example = "90")
-    private Integer duration;
+
 
     private String teacher1;
     private String teacher2;
+
     private int state;
+    private int duration;
+
+    private String patrol1;
+    private String patrol2;
 
     private int type;
 
-    @ApiModelProperty(value = "班级列表cid", example = "32")
-    private List<Integer> cidList;
+    @ApiModelProperty(value = "学院", example = "软件工程")
+    private String school;
 
     public Exam() {}
-
-    public void setD_ay(String d_ay) {
-        this.d_ay = d_ay;
-        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
-        Date date = null;
-        try {
-            date = sdf.parse(d_ay);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        day = Calendar.getInstance();
-        day.setTime(date);
-    }
 
     /**
      * 获取该场次考试的周数

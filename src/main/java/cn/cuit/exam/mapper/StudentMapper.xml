@@ -97,6 +97,10 @@
     where mname = #{arg0}
   </select>
 
+  <select id="getAllStuByCid" resultType="cn.cuit.exam.bean.Student">
+    select * from student_t where cid = #{arg0};
+  </select>
+
   <update id="addStuNum">
     update class_t
     set num = num + 1

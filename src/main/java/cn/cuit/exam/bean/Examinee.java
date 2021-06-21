@@ -1,10 +1,13 @@
 package cn.cuit.exam.bean;
 
-public class Examiee {
+import lombok.Data;
+
+@Data
+public class Examinee {
 
     private String sno;
     private int eno;
     private String site;
-    private String seat;
+    private int seat;
 
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cuit.exam.mapper.InspectorMapper">
+    <update id="insertInspector" parameterType="cn.cuit.exam.bean.Inspector">
+        insert into inspector_t(teacher1, teacher2, eno, site) VALUES (#{tno1}, #{tno2}, #{eno}, #{site});
+    </update>
+
+    <select id="selectInspectorByEno">
+        select teacher1, teacher2 from inspector_t where eno = #{arg0};
+    </select>
+
+    <update id="updateInspectorByEnoAndTno">
+        update inspector_t set teacher1 = #{arg2} where teacher1 = #{arg1} and eno = #{arg0};
+        update inspector_t set teacher2 = #{arg2} where teacher2 = #{arg1} and eno = #{arg0};
+    </update>
+</mapper>

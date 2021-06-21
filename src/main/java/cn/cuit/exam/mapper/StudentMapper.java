@@ -30,6 +30,8 @@ public interface StudentMapper {
     // 查询专业简称
     String selectMajorMshort(String mname);
 
+    List<Student> getAllStuByCid(int cid);
+
     // 增加学生人数
     int addStuNum(int cid);
 

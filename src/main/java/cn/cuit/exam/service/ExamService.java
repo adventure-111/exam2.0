@@ -13,13 +13,20 @@ public interface ExamService {
 
     void test();
 
-    public ClassroomAllocation[] getClassroomAllocation(List<Klass> classList, Exam temp);
 
-    public void autoInsertExamSecondary(ClassroomAllocation[] allocations, Exam temp, int selected);
 
-    public List<Inspector> getTeacherAllocation(String school, Exam exam);
+    ClassroomAllocation[] getClassroomAllocation(List<Klass> classList, Exam temp);
 
-    public List<Exam> autoInsertExamThird(List<Exam> examList);
+    // 用户选择方案后，点击下一步，此处将存储所有已知信息
+    void autoInsertExamSecondary(ClassroomAllocation[] allocations, Exam temp, int selected);
+
+    // 获得教师分配方案
+    List<Inspector> getTeacherAllocation(Exam exam);
+
+    // 暂存
+    void tempStore(Exam exam);
+
+    void deploy(Exam exam);
 
     // -----------------------------------Controller要调用的业务接口------------------------------------------
 
