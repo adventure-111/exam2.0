@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TeacherServiceImpl implements TeacherService {
@@ -23,7 +25,7 @@ public class TeacherServiceImpl implements TeacherService {
         // 查询教师集合
         List<Teacher> teacherList = teacherMapper.selectTeacher(teacherQuery);
         // 创建pageBean
-        PageBean<Teacher> pageBean = new PageBean<>(totalCount, teacherList, teacherQuery.getPageSize(), teacherQuery.getPageNum());
+        PageBean<Teacher> pageBean = new PageBean<Teacher>(totalCount, teacherList, teacherQuery.getPageSize(), teacherQuery.getPageNum());
 
         return pageBean;
     }
@@ -37,6 +39,22 @@ public class TeacherServiceImpl implements TeacherService {
         // 添加用户
         teacherMapper.addUser(teacher);
         return 1;
+    }
+
+    @Override
+    public Map addTeacherList(List<Teacher> teacherList, String school) {
+        int successCount = 0;
+        int totalCount = 0;
+
+        for ( Teacher teacher : teacherList ) {
+            totalCount++;
+            teacher.setSchool(school);
+            successCount += addTeacher(teacher);
+        }
+        Map<String, Integer> map = new HashMap<>();
+        map.put("success", successCount);
+        map.put("fail", totalCount-successCount);
+        return map;
     }
 
     @Override

@@ -26,4 +26,9 @@ class UtilsMapperTest {
     void selectClassNum() {
         System.out.println(utilsMapper.selectClassNum("软工",19,2));
     }
+
+    @Test
+    void selectAdmin() {
+        System.out.println(utilsMapper.queryAdminByUsername("rjgc"));
+    }
 }

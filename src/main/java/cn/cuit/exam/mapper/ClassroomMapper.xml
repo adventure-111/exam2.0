@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cuit.exam.mapper.ClassroomMapper">
+<<<<<<< HEAD
+
+    <sql id="query_items_where">
+        <if test="type != null and type != 0" >
+            and type = #{type}
+        </if>
+        <if test="teachBuilding != null and teachBuilding != ''" >
+            and site like '%${teachBuilding}___'
+        </if>
+    </sql>
+
+    <select id="queryClassroomByTeachBuildingIdAndType" resultType="cn.cuit.exam.bean.Classroom">
+        select * from classroom_t where substr(site, 2, 1) = #{id} and type = #{type}
+    </select>
+
+    <insert id="insertClassroom" parameterType="cn.cuit.exam.bean.Classroom">
+        insert classroom_t(site, capacity, type)
+        values (#{site}, #{capacity}, #{type})
+    </insert>
+
+    <select id="getClassroomBySite" resultType="cn.cuit.exam.bean.Classroom">
+        select site, capacity, type
+        from classroom_t
+        where site = #{arg0}
+    </select>
+
+    <select id="selectClassroom" resultType="cn.cuit.exam.bean.Classroom" parameterType="cn.cuit.exam.bean.vo.ClassroomQuery">
+        select site, capacity, type
+        from classroom_t
+        <where>
+            <include refid="query_items_where"></include>
+        </where>
+        <if test="sort!=null and sort!=''">
+            ORDER BY ${sort}
+        </if>
+        <if test="direction!=null and direction!=''">
+            ${direction}
+        </if>
+
+        <trim prefix="limit " >
+            <if test="pageNum != null, pageSize != null">
+                #{beginRow}, #{pageSize}
+            </if>
+        </trim>
+    </select>
+
+    <select id="selectClassroomCount" resultType="java.lang.Integer" parameterType="cn.cuit.exam.bean.vo.ClassroomQuery">
+        select count(*)
+        from classroom_t
+        <where>
+            <include refid="query_items_where"></include>
+        </where>
+    </select>
+
+=======
+    <select id="queryClassroomByTeachBuildingIdAndType" resultType="cn.cuit.exam.bean.Classroom">
+        select * from classroom_t where substr(site, 2, 1) = #{id} and type = #{type}
+    </select>
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
+</mapper>

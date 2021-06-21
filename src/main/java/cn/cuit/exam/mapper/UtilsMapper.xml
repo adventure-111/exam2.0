@@ -13,7 +13,7 @@
         from class_t
     </select>
 
-    <select id="selectClassNum" resultType="java.lang.Integer">
+    <select id="getClassNum" resultType="java.lang.Integer">
         select num
         from class_t c
         join major_t m
@@ -21,4 +21,80 @@
         where mshort = #{mshort} and semester = #{semester} and cnt = #{cnt}
     </select>
 
+<<<<<<< HEAD
+    <select id="getClassNumByCid" resultType="java.lang.Integer">
+        select num
+        from class_t c
+        where cid = #{arg0}
+    </select>
+
+    <select id="getCnoByCoursename" resultType="java.lang.String">
+        select cno
+        from course_t
+        where cname = #{arg0}
+    </select>
+
+    <select id="getTnoByTname" resultType="java.lang.String" >
+        select tno
+        from teacher_t
+        where tname = #{arg0}
+    </select>
+
+    <select id="getClassId" resultType="java.lang.Integer" >
+        select cid
+        from class_t c
+        join major_t m
+        on c.mno = m.mno
+        where mshort = #{mshort} and semester = #{semester} and cnt = #{cnt}
+    </select>
+
+    <select id="getMajorMnoByMname" resultType="java.lang.String">
+        select mno
+        from major_t
+        where mname = #{arg0}
+    </select>
+
+    <select id="getMajorMnoByMshort" resultType="java.lang.String">
+        select mno
+        from major_t
+        where mshort = #{arg0}
+    </select>
+
+=======
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
+    <select id="queryAdminByUsername" resultType="cn.cuit.exam.bean.Admin">
+        select username, password, school
+        from admin_t
+        where username = #{arg0}
+    </select>
+
+<<<<<<< HEAD
+    <select id="queryUserByUsername" resultType="cn.cuit.exam.bean.User" >
+        select username, password, role
+        from user_t
+        where userName = #{arg0}
+    </select>
+
+    <update id="updateUserPassword" >
+        update user_t
+        set password = #{newPassword}
+        where username = #{username}
+    </update>
+
+    <update id="updateAdminPassword" >
+        update user_t
+        set password = #{newPassword}
+        where username = #{username}
+    </update>
+
+    <select id="getTnameByTno" resultType="java.lang.String">
+        select tname from teacher_t where tno = #{arg0}
+    </select>
+
+    <select id="getSnameBySno" resultType="java.lang.String">
+        select sname from student_t where sno = #{arg0}
+    </select>
+
+=======
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 </mapper>

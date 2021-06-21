@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -52,6 +54,24 @@ public class StudentServiceImpl implements StudentService {
 
         return 1;
     }
+
+    @Override
+    public Map addStudentList(List<Student> studentList) {
+        int successCount = 0;
+        int totalCount = 0;
+
+        for ( Student student : studentList ) {
+            totalCount++;
+            successCount += addStudent(student);
+        }
+
+        Map<String, Integer> map = new HashMap<>();
+        map.put("success", successCount);
+        map.put("fail", totalCount - successCount);
+
+        return map;
+    }
+
 
     @Override
     @Transactional

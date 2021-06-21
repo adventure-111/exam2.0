@@ -29,7 +29,9 @@ public interface TeacherMapper {
     // 更新用户表
     int updateUser(Teacher teacher);
 
-    // 增加历史监考次数
+    // 增加历史监考次数+1
+    int addTotalByOne(String tno);
+
     // 增加本次监考次数
     // 减少本次监考次数
     // 增加历史申请调换次数

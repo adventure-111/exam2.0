@@ -6,22 +6,22 @@
   <cache />
 
   <sql id="query_items_where" >
-    <if test="sname != null">
+    <if test="sname != null and  sname != ''">
       and sname like '%${sname}%'
     </if>
-    <if test="mname != null">
+    <if test="mname != null and mname != ''">
       and mname like '%${mname}%'
     </if>
-    <if test="mshort != null">
+    <if test="mshort != null and mshort != '' ">
       and mshort = #{mshort}
     </if>
-    <if test="semester != null">
+    <if test="semester != null and semester != 0">
       and semester = #{semester}
     </if>
-    <if test="cnt != null">
+    <if test="cnt != null and cnt != ''">
       and cnt = #{cnt}
     </if>
-    <if test="school != null">
+    <if test="school != null and school != ''">
       and school = #{school}
     </if>
   </sql>
@@ -50,7 +50,7 @@
 
     <trim prefix="limit " >
       <if test="pageNum != null, pageSize != null">
-        #{pageNum}, #{pageSize}
+        #{beginRow}, #{pageSize}
       </if>
     </trim>
   </select>
