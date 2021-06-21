@@ -152,4 +152,13 @@
     delete from user_t
     where username = #{arg0}
   </delete>
+
+  <delete id="deleteExaminee">
+    delete from examinee_t
+    where sno = #{arg0}
+  </delete>
+
+  <select id="getAllStuByCid" resultType="cn.cuit.exam.bean.Student">
+    select * from student_t where cid = #{arg0};
+  </select>
 </mapper>

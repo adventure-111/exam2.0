@@ -41,4 +41,7 @@ public class Patrol implements Serializable {
 
     @ApiModelProperty(value = "所有考试地点")
     private String sites;
+
+    @ApiModelProperty(value = "场次")
+    private String cnt;
 }

@@ -4,16 +4,8 @@ import cn.cuit.exam.bean.Course;
 import cn.cuit.exam.bean.Teach;
 import cn.cuit.exam.bean.vo.CourseQuery;
 import cn.cuit.exam.bean.vo.TeachQuery;
-<<<<<<< HEAD
-<<<<<<< HEAD
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-=======
-import org.mapstruct.Mapper;
->>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
-=======
-import org.mapstruct.Mapper;
->>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 
 import java.util.List;
 

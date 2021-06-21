@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cuit.exam.mapper.AbsenceMapper">
+    <update id="insertAbsence" parameterType="cn.cuit.exam.bean.Absence">
+        insert into absence_t(tno, eno, reason, state, comment) VALUES (#{tno}, #{eno}, #{reason}, 1, '')
+    </update>
+
+    <update id="updateAbsence" parameterType="cn.cuit.exam.bean.Absence">
+        update absence_t set state = #{state}, comment = #{comment} where eno = #{eno} and tno == #{tno};
+    </update>
+
+    <select id="queryByEnoAndTno" resultType="cn.cuit.exam.bean.Absence">
+        select * from absence_t where eno=#{eno} and tno=#{tno};
+    </select>
+</mapper>

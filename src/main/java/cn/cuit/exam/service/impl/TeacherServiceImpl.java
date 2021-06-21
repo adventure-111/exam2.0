@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
+
 
 @Service
 public class TeacherServiceImpl implements TeacherService {
@@ -25,7 +27,7 @@ public class TeacherServiceImpl implements TeacherService {
         // 查询教师集合
         List<Teacher> teacherList = teacherMapper.selectTeacher(teacherQuery);
         // 创建pageBean
-        PageBean<Teacher> pageBean = new PageBean<Teacher>(totalCount, teacherList, teacherQuery.getPageSize(), teacherQuery.getPageNum());
+        PageBean<Teacher> pageBean = new PageBean<>(totalCount, teacherList, teacherQuery.getPageSize(), teacherQuery.getPageNum());
 
         return pageBean;
     }
@@ -42,13 +44,12 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Map addTeacherList(List<Teacher> teacherList, String school) {
+    public Map addTeacherList(List<Teacher> teacherList) {
         int successCount = 0;
         int totalCount = 0;
 
         for ( Teacher teacher : teacherList ) {
             totalCount++;
-            teacher.setSchool(school);
             successCount += addTeacher(teacher);
         }
         Map<String, Integer> map = new HashMap<>();
@@ -77,5 +78,25 @@ public class TeacherServiceImpl implements TeacherService {
         for ( String tno : tnoList ) {
             deleteTeacher(tno);
         }
+    }
+
+    @Override
+    public PriorityQueue<Teacher> getMinHeapBySchool(String school) {
+        // 教师小顶堆
+        PriorityQueue<Teacher> teacherQueue = new PriorityQueue<>(
+                (o1, o2) -> {
+                    if (o1.getTotal().equals(o2.getTotal())) {
+                        return o2.getPassivecnt() - o1.getPassivecnt();
+                    } else {
+                        return o2.getTotal() - o1.getTotal();
+                    }
+                }
+        );
+
+        // 获取所有教师
+        TeacherQuery tq = new TeacherQuery();
+        tq.setSchool(school);
+        teacherQueue.addAll(teacherMapper.selectTeacher(tq));
+        return teacherQueue;
     }
 }

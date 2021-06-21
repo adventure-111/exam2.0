@@ -1,7 +1,5 @@
 package cn.cuit.exam.bean;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 import cn.cuit.exam.mapper.CourseMapper;
 import cn.cuit.exam.mapper.UtilsMapper;
 import io.swagger.annotations.ApiModelProperty;
@@ -14,30 +12,11 @@ import java.io.Serializable;
 public class Teach implements Serializable {
 
 //    @ApiModelProperty(hidden = true)
-=======
-import lombok.AllArgsConstructor;
-import lombok.Data;
-=======
-import lombok.AllArgsConstructor;
-import lombok.Data;
->>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
-import lombok.NoArgsConstructor;
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Teach {
-
-<<<<<<< HEAD
->>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
-=======
->>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
     private String cno;
 
+    @ApiModelProperty(hidden = true)
     private String tno;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     @ApiModelProperty(hidden = true)
     private Integer cid;
 
@@ -53,10 +32,4 @@ public class Teach {
     @ExcelColumn(value = "教师姓名", col = 3)
     private String tname;
 
-=======
-    private int cid;
->>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
-=======
-    private int cid;
->>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 }

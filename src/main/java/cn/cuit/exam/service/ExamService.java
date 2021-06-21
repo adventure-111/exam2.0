@@ -1,38 +1,37 @@
 package cn.cuit.exam.service;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 import cn.cuit.exam.bean.*;
 import cn.cuit.exam.bean.common.ClassroomAllocation;
+import cn.cuit.exam.bean.parameter.ManualExamArr2Param;
 import cn.cuit.exam.bean.vo.CourseQuery;
-=======
-import cn.cuit.exam.bean.Class;
-import cn.cuit.exam.bean.Exam;
-import cn.cuit.exam.bean.common.ClassroomAllocation;
->>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
-=======
-import cn.cuit.exam.bean.Class;
-import cn.cuit.exam.bean.Exam;
-import cn.cuit.exam.bean.common.ClassroomAllocation;
->>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public interface ExamService {
 
     void test();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    public ClassroomAllocation[] getClassroomAllocation(List<Klass> classList, Exam temp);
+    ClassroomAllocation[] getClassroomAllocation(List<Klass> classList, Exam temp);
 
-    public void autoInsertExamSecondary(ClassroomAllocation[] allocations, Exam temp, int selected);
+    // 用户选择方案后，点击下一步，此处将存储所有已知信息
+    void autoInsertExamSecondary(ClassroomAllocation allocation, Exam temp);
 
-    public List<Inspector> getTeacherAllocation(String school, Exam exam);
+    // 获得教师分配方案
+    List<Inspector> getTeacherAllocation(Exam exam);
 
-    public List<Exam> autoInsertExamThird(List<Exam> examList);
+    // 暂存
+    void tempStore(Exam exam);
+
+    // 发布
+    void deploy(Exam exam);
+
+    // 手动排考第二步，对于给出的每一间教室，都返回一场冲突情况表
+    Map<Integer, List<String>> getConflictSituation(ManualExamArr2Param param, int duration);
+
+    boolean isTeacherFree(String tno, int eno);
 
     // -----------------------------------Controller要调用的业务接口------------------------------------------
 
@@ -47,17 +46,6 @@ public interface ExamService {
     List<Inspector> queryInspector(String eno);
 
     List<Examinee> queryExaminee(String eno, String site);
-=======
-=======
->>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
-    public ClassroomAllocation[] getClassroomAllocation(List<Class> classList, Exam temp);
 
-    public void autoInsertExamSecondary(ClassroomAllocation[] allocations, Exam temp, int selected, List<Class> classList);
-
-    List<Exam> autoInsertExamThird(List<Exam> examList);
-
-<<<<<<< HEAD
->>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
-=======
->>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
+    List getSiteList(String no);
 }

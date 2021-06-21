@@ -82,6 +82,9 @@ public class StudentServiceImpl implements StudentService {
         studentMapper.deleteStu(sno);
         // 删除用户
         int count = studentMapper.deleteUser(sno);
+        // 删除考生
+        studentMapper.deleteExaminee(sno);
+
         return count;
     }
 

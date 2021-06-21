@@ -4,6 +4,7 @@ import cn.cuit.exam.bean.Student;
 import cn.cuit.exam.bean.vo.StudentQuery;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -51,10 +52,14 @@ public interface StudentMapper {
     // 删除用户
     int deleteUser(String sno);
 
+    // 删除考生
+    int deleteExaminee(String sno);
+
     // 更新学生表
     int updateStu(Student student);
 
     // 更新用户表
     int updateUser(Student student);
 
+    List<Student> getAllStuByCid(int cid);
 }

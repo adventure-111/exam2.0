@@ -1,13 +1,9 @@
 package cn.cuit.exam.bean.vo;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Query {
 
     @ApiModelProperty(value = "排序字段", example = "sno", required = false)

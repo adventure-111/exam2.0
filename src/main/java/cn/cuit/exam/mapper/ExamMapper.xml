@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.cuit.exam.mapper.ExamMapper">
 
-    <cache/>
+<!--    <cache/>-->
 
     <select id="getClassList" resultType="cn.cuit.exam.bean.Klass" parameterType="java.lang.String">
         select
@@ -24,7 +24,7 @@
         on e.eno = ee.eno
         join course_t c
         on c.cno = e.cno
-        where sno = #{arg0}
+        where sno = #{arg0} and state = 3
     </select>
 
     <select id="getInspectorInfo" resultType="cn.cuit.exam.bean.Inspector">
@@ -38,7 +38,7 @@
             on c.cno = e.cno
             join teacher_t t
             on t.tno = i.teacher1 or t.tno = i.teacher2
-        where teacher1 = #{arg0} or teacher2 = #{arg1}
+        where teacher1 = #{arg0} or teacher2 = #{arg1}  and state = 3
     </select>
 
     <select id="getPatrolInfo" resultType="cn.cuit.exam.bean.Patrol">
@@ -52,18 +52,16 @@
             on c.cno = e.cno
             join teacher_t t
             on t.tno = e.patrol1 or t.tno = e.patrol2
-        where patrol1 = #{arg0} or patrol2 = #{arg1}
+        where patrol1 = #{arg0} or patrol2 = #{arg1}  and state = 3
     </select>
 
     <select id="queryPatrol" resultType="cn.cuit.exam.bean.Patrol">
-        select distinct e.eno, day, start, end,
-                (select tname from teacher_t where tno = patrol1) as patrol1,
-                (select tname from teacher_t where tno = patrol2) as patrol2
+        select  DISTINCT e.eno, day, start, end, e.cnt,
+                                         (select tname from teacher_t where tno = patrol1) as patrol1,
+                                         (select tname from teacher_t where tno = patrol2) as patrol2
         from exam_t e
-            join inspector_t ee
-            on e.eno = ee.eno
             join course_t c
-            on c.cno = e.cno
+        on c.cno = e.cno
             join teacher_t t
             on t.tno = e.patrol1 or t.tno = e.patrol2
         where c.cno = #{arg0}
@@ -93,9 +91,35 @@
             join major_t m
         on m.mno = c.mno
         where site = #{site} and e.eno = #{eno}
-        group by c.cid
+        group by s.sno
     </select>
 
+    <update id="updateDay" parameterType="cn.cuit.exam.bean.Exam">
+        update exam_t set day = #{day} where cno = #{cno} and cnt = #{cnt};
+    </update>
 
+    <update id="insertExam" parameterType="cn.cuit.exam.bean.Exam">
+        insert into exam_t (cno, cnt) values (#{cno}, #{cnt});
+    </update>
+
+    <select id="getAllExam" resultType="cn.cuit.exam.bean.Exam">
+        select * from exam_t;
+    </select>
+
+    <select id="getExamByCnoAndCnt" parameterType="cn.cuit.exam.bean.Exam">
+        select * from exam_t where cno = #{arg0} and cnt = #{arg1};
+    </select>
+
+    <update id="updateStateTo_3">
+        update exam_t
+        set state = 3
+        where cno = #{arg0}
+    </update>
+
+    <update id="updateStateTo2" >
+        update exam_t
+        set state = 2
+        where cno = #{arg0}
+    </update>
 
 </mapper>

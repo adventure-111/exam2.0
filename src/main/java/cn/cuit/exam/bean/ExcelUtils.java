@@ -94,6 +94,7 @@ public class ExcelUtils {
                 boolean firstRow = true;
                 for (int i = sheet.getFirstRowNum(); i <= sheet.getLastRowNum(); i++) {
                     Row row = sheet.getRow(i);
+                    System.out.println("========="+row+"==========");
                     //首行  提取注解
                     if (firstRow) {
                         for (int j = row.getFirstCellNum(); j <= row.getLastCellNum(); j++) {

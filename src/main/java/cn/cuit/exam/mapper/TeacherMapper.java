@@ -42,4 +42,8 @@ public interface TeacherMapper {
 
     // 删除用户
     int deleteUser(String tno);
+
+    Teacher selectTeacherByTname(String tname);
+
+    String selectSchoolByTno(String tno);
 }

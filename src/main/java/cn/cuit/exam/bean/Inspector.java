@@ -39,4 +39,8 @@ public class Inspector implements Serializable {
     @ApiModelProperty(value = "考试地点")
     private String site;
 
+    private String tno1;
+
+    private String tno2;
+
 }

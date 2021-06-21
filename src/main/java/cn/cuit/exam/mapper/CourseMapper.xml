@@ -34,7 +34,14 @@
     </select>
 
     <select id="selectCourse" resultType="cn.cuit.exam.bean.Course" parameterType="cn.cuit.exam.bean.vo.CourseQuery">
-        select co.cno, cname, type, sum(num) as num
+        select co.cno, cname, type, sum(num) as num,
+
+        (case
+        when co.cno in (select cno from exam_t where state = 1) then 1
+        when co.cno in (select cno from exam_t where state = 2) then 2
+        when co.cno in (select cno from exam_t where state = 3) then 3
+        else 1
+        end) as state
         from course_t co
         join teach_t t
         on co.cno = t.cno
@@ -44,6 +51,7 @@
         on t.tno = te.tno
         join major_t m
         on m.mno = c.mno
+
         <where>
             <include refid="query_items_where"></include>
             and m.school = #{school}

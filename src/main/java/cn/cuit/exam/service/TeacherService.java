@@ -4,12 +4,11 @@ import cn.cuit.exam.bean.PageBean;
 import cn.cuit.exam.bean.Student;
 import cn.cuit.exam.bean.Teacher;
 import cn.cuit.exam.bean.vo.TeacherQuery;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 
-@Service
 public interface TeacherService {
 
     /**
@@ -31,7 +30,7 @@ public interface TeacherService {
      * @param teacherList
      * @return
      */
-    Map addTeacherList(List<Teacher> teacherList, String school);
+    Map addTeacherList(List<Teacher> teacherList);
 
     /**
      * 更新教师信息
@@ -53,5 +52,7 @@ public interface TeacherService {
      * @return
      */
     void deleteTeacherList(List<String> tnoList);
+
+    PriorityQueue<Teacher> getMinHeapBySchool(String school);
 }
 

@@ -50,6 +50,7 @@ public class StudentController {
 //        long t1 = System.currentTimeMillis();
 //        long t2 = System.currentTimeMillis();
 //        System.out.println(String.format("read over! cost:%sms", (t2 - t1)));
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!");
         List<Student> list = ExcelUtils.readExcel("", Student.class, file);
 //        System.out.println(list);
         Map map = studentService.addStudentList(list);

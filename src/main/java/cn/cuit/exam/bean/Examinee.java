@@ -16,7 +16,9 @@ public class Examinee implements Serializable {
 
     private String sno;
     private int eno;
-    private String seat;
+    private Integer seat;
+
+    private String sname;
 
     @ApiModelProperty(value = "课程号")
     private String cno;

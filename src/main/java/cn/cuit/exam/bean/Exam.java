@@ -1,16 +1,14 @@
 package cn.cuit.exam.bean;
 
 import cn.cuit.exam.bean.common.Utils;
-<<<<<<< HEAD
-<<<<<<< HEAD
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -27,67 +25,28 @@ public class Exam implements Serializable {
     private String site;
 
     @ApiModelProperty(value = "考试日期", hidden = true)
-    private Calendar day;
-    @ApiModelProperty(value = "考试日期", example = "2021-6-30")
-    private String d_ay;
-    private Calendar start;
+    public Calendar day;   //有效值（年、月、日）
+
+    private Calendar start; //有效值（时、分）
     private Calendar end;
-    @ApiModelProperty(value = "考试时长（分钟）", example = "90")
-    private Integer duration;
-=======
-=======
->>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
-import lombok.Data;
 
-import java.util.Calendar;
-
-@Data
-public class Exam {
-
-    private int eno;
-    private String cno;
-    private int cnt;
-    private String site;
-
-    private Calendar day;
-    private Calendar start;
-    private Calendar end;
-    private int duration;
-<<<<<<< HEAD
->>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
-=======
->>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 
     private String teacher1;
     private String teacher2;
+
     private int state;
+    private int duration;
+
+    private String patrol1;
+    private String patrol2;
 
     private int type;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    @ApiModelProperty(value = "班级列表cid", example = "32")
-    private List<Integer> cidList;
+    @ApiModelProperty(value = "学院", example = "软件工程")
+    private String school;
 
     public Exam() {}
 
-    public void setD_ay(String d_ay) {
-        this.d_ay = d_ay;
-        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
-        Date date = null;
-        try {
-            date = sdf.parse(d_ay);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        day = Calendar.getInstance();
-        day.setTime(date);
-    }
-
-=======
->>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
-=======
->>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
     /**
      * 获取该场次考试的周数
      */
@@ -105,6 +64,10 @@ public class Exam {
         int week = this.getWeek();
         int weekdays = (int) (day.getTimeInMillis() - init.getTimeInMillis()) / (1000 * 3600 * 24);
         return weekdays % week + 1;
+    }
+
+    public Date getDay() {
+        return (Date) this.day.getTime();
     }
 
 }
