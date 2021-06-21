@@ -1,6 +1,7 @@
 package cn.cuit.exam.service.impl;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import cn.cuit.exam.bean.*;
 import cn.cuit.exam.bean.common.*;
 import cn.cuit.exam.bean.vo.CourseQuery;
@@ -16,6 +17,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 =======
+=======
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 import cn.cuit.exam.bean.Class;
 import cn.cuit.exam.bean.Classroom;
 import cn.cuit.exam.bean.Course;
@@ -31,6 +34,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+<<<<<<< HEAD
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
+=======
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 
 @Service
@@ -38,6 +44,7 @@ public class ExamServiceImpl implements ExamService {
 
     @Autowired
     private ClassroomMapper classroomMapper;
+<<<<<<< HEAD
 <<<<<<< HEAD
     @Autowired
     private ExamMapper examMapper;
@@ -49,6 +56,8 @@ public class ExamServiceImpl implements ExamService {
     private TeacherMapper teacherMapper;
     @Autowired
     private CourseMapper courseMapper;
+=======
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 
@@ -63,8 +72,13 @@ public class ExamServiceImpl implements ExamService {
      */
     @Override
 <<<<<<< HEAD
+<<<<<<< HEAD
     public ClassroomAllocation[] getClassroomAllocation(List<Klass> classList, Exam temp) {
         Klass classTemp = classList.get(0);
+=======
+    public ClassroomAllocation[] getClassroomAllocation(List<Class> classList, Exam temp) {
+        Class classTemp = classList.get(0);
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
     public ClassroomAllocation[] getClassroomAllocation(List<Class> classList, Exam temp) {
         Class classTemp = classList.get(0);
@@ -135,9 +149,14 @@ public class ExamServiceImpl implements ExamService {
                 }
             }
 <<<<<<< HEAD
+<<<<<<< HEAD
             System.out.println("教室分配"+cas);
             return cas;
 
+=======
+
+            return cas;
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
 
             return cas;
@@ -148,8 +167,11 @@ public class ExamServiceImpl implements ExamService {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
     /**
@@ -158,7 +180,11 @@ public class ExamServiceImpl implements ExamService {
      */
     @Override
 <<<<<<< HEAD
+<<<<<<< HEAD
     public void autoInsertExamSecondary(ClassroomAllocation[] allocations, Exam temp, int selected) {
+=======
+    public void autoInsertExamSecondary(ClassroomAllocation[] allocations, Exam temp, int selected, List<Class> classList) {
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
     public void autoInsertExamSecondary(ClassroomAllocation[] allocations, Exam temp, int selected, List<Class> classList) {
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
@@ -168,6 +194,7 @@ public class ExamServiceImpl implements ExamService {
         // 添加考试和教室的对应关系
         temp.setEno(ExamUtils.examList.size());
         ExamUtils.examList.add(temp);
+<<<<<<< HEAD
 <<<<<<< HEAD
         List<String> rooms = new ArrayList<>();
         for (Classroom room : allocations[selected].getClassrooms()) {
@@ -246,6 +273,8 @@ public class ExamServiceImpl implements ExamService {
 
         return inspectors;
 =======
+=======
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
         for (Classroom room : allocations[selected].getClassrooms()) {
             List<Integer> listTmp;
             if (ExamUtils.ClassroomExamMap.containsKey(room.getSite())) {
@@ -268,6 +297,9 @@ public class ExamServiceImpl implements ExamService {
             listTmp.add(temp.getEno());
             ExamUtils.ClassExamMap.put(t.getCid(), listTmp);
         }
+<<<<<<< HEAD
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
+=======
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
     }
 
@@ -278,6 +310,7 @@ public class ExamServiceImpl implements ExamService {
      */
     @Override
     public List<Exam> autoInsertExamThird(List<Exam> examList) {
+<<<<<<< HEAD
 <<<<<<< HEAD
         return null;
     }
@@ -331,6 +364,10 @@ public class ExamServiceImpl implements ExamService {
     }
 
 
+=======
+        return examList;
+    }
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
         return examList;
     }

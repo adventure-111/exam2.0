@@ -2,6 +2,7 @@ package cn.cuit.exam.service;
 
 import cn.cuit.exam.bean.Classroom;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import cn.cuit.exam.bean.PageBean;
 import cn.cuit.exam.bean.vo.ClassroomQuery;
 import org.springframework.stereotype.Service;
@@ -11,11 +12,16 @@ import java.util.Map;
 
 
 =======
+=======
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+<<<<<<< HEAD
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
+=======
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 public interface ClassroomService {
 
@@ -24,6 +30,7 @@ public interface ClassroomService {
      */
     List<Classroom> queryClassroomByTeachBuildingIdAndType(int id, int type);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     /**
      * 添加教室
@@ -51,6 +58,8 @@ public interface ClassroomService {
     Map deleteClassroomList(List<String> siteList);
 
     int deleteClassroom(String site);
+=======
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 }

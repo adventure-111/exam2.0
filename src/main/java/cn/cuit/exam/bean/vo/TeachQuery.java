@@ -17,5 +17,8 @@ public class TeachQuery extends Query{
 =======
     private String tno;
     private int cid;
+<<<<<<< HEAD
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
+=======
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 }

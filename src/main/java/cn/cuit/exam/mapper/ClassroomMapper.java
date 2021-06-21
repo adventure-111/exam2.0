@@ -2,8 +2,12 @@ package cn.cuit.exam.mapper;
 
 import cn.cuit.exam.bean.Classroom;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import cn.cuit.exam.bean.vo.ClassroomQuery;
 import org.apache.ibatis.annotations.Mapper;
+=======
+import org.mapstruct.Mapper;
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
 import org.mapstruct.Mapper;
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
@@ -16,6 +20,7 @@ public interface ClassroomMapper {
     List<Classroom> queryClassroomByTeachBuildingIdAndType(int id, int type);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // 添加教室
     int insertClassroom(Classroom classroom);
 
@@ -27,6 +32,8 @@ public interface ClassroomMapper {
 
     // 条件查询教室总记录条数
     int selectClassroomCount(ClassroomQuery classroomQuery);
+=======
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 }

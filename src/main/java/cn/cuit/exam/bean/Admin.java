@@ -12,7 +12,10 @@ public class Admin{
     private String school;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     private String newPassword;
+=======
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 }

@@ -2,6 +2,7 @@ package cn.cuit.exam.bean;
 
 import cn.cuit.exam.bean.common.Utils;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -34,6 +35,8 @@ public class Exam implements Serializable {
     @ApiModelProperty(value = "考试时长（分钟）", example = "90")
     private Integer duration;
 =======
+=======
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 import lombok.Data;
 
 import java.util.Calendar;
@@ -50,6 +53,9 @@ public class Exam {
     private Calendar start;
     private Calendar end;
     private int duration;
+<<<<<<< HEAD
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
+=======
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 
     private String teacher1;
@@ -58,6 +64,7 @@ public class Exam {
 
     private int type;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     @ApiModelProperty(value = "班级列表cid", example = "32")
     private List<Integer> cidList;
@@ -77,6 +84,8 @@ public class Exam {
         day.setTime(date);
     }
 
+=======
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
     /**

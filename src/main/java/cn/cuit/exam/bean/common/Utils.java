@@ -1,7 +1,11 @@
 package cn.cuit.exam.bean.common;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import cn.cuit.exam.bean.Klass;
+=======
+import cn.cuit.exam.bean.Class;
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
 import cn.cuit.exam.bean.Class;
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
@@ -27,15 +31,21 @@ public class Utils {
 
     @Autowired
 <<<<<<< HEAD
+<<<<<<< HEAD
     public static MajorMapper majorMapper;
 
     @Autowired
     public static ClassMapper classMapper;
 =======
+=======
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
     private static MajorMapper majorMapper;
 
     @Autowired
     private static ClassMapper classMapper;
+<<<<<<< HEAD
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
+=======
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 
     public static MajorMapper getMajorMapper() {
@@ -98,7 +108,11 @@ public class Utils {
      * 当天是指当天的8:00~22:00
      */
 <<<<<<< HEAD
+<<<<<<< HEAD
     public static boolean isClassTimeScheduleConflict(List<Klass> classes, Calendar date, int duration) {
+=======
+    public static boolean isClassTimeScheduleConflict(List<Class> classes, Calendar date, int duration) {
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
     public static boolean isClassTimeScheduleConflict(List<Class> classes, Calendar date, int duration) {
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
@@ -115,7 +129,11 @@ public class Utils {
         for (int i = 0; i < 3; ++i) cnt[i] = classes.size();
         for (int i = 0; i < 3; ++i) {
 <<<<<<< HEAD
+<<<<<<< HEAD
             for (Klass t : classes) {
+=======
+            for (Class t : classes) {
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
             for (Class t : classes) {
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c

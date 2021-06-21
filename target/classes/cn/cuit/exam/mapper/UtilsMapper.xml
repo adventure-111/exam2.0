@@ -22,12 +22,18 @@
     </select>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
     <select id="queryAdminByUsername" resultType="cn.cuit.exam.bean.Admin">
         select username, password, school
         from admin_t
         where username = #{arg0}
     </select>
 
+<<<<<<< HEAD
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
+=======
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 </mapper>

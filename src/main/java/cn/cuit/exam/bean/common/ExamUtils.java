@@ -2,7 +2,10 @@ package cn.cuit.exam.bean.common;
 
 import cn.cuit.exam.bean.Exam;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import io.swagger.models.auth.In;
+=======
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 
@@ -14,17 +17,23 @@ public class ExamUtils {
     public static List<Exam> examList = new ArrayList<>();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     //(eno, List<cid>)对照表
     public static Map<Integer, List<Integer>> ClassExamMap = new HashMap<>();
 
     //(eno, List<Site>)对照表
     public static Map<Integer, List<String>> ClassroomExamMap = new HashMap<>();
 =======
+=======
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
     //(cid, List<eno>)对照表
     public static Map<Integer, List<Integer>> ClassExamMap = new HashMap<>();
 
     //(site, List<eno>)对照表
     public static Map<String, List<Integer>> ClassroomExamMap = new HashMap<>();
+<<<<<<< HEAD
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
+=======
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 
 }

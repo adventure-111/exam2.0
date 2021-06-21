@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.cuit.exam.mapper.ClassroomMapper">
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     <sql id="query_items_where">
         <if test="type != null and type != 0" >
@@ -55,6 +56,11 @@
         </where>
     </select>
 
+=======
+    <select id="queryClassroomByTeachBuildingIdAndType" resultType="cn.cuit.exam.bean.Classroom">
+        select * from classroom_t where substr(site, 2, 1) = #{id} and type = #{type}
+    </select>
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
     <select id="queryClassroomByTeachBuildingIdAndType" resultType="cn.cuit.exam.bean.Classroom">
         select * from classroom_t where substr(site, 2, 1) = #{id} and type = #{type}

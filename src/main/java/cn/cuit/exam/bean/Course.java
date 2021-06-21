@@ -11,6 +11,7 @@ import java.io.Serializable;
 public class Course implements Serializable {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     @ApiModelProperty(value = "课程号", example = "CS005A")
     @ExcelColumn(value = "课程号", col = 1)
     private String cno;
@@ -35,6 +36,16 @@ public class Course implements Serializable {
     private String cname;
 
     //课程类型，1为公共课，2位专业课
+=======
+    //课程号
+//    @ApiModelProperty(hidden = true)
+    private String cno;
+
+//    @ApiModelProperty(hidden = true)
+    private String cname;
+
+    //课程类型，1为公共课，2位专业课
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 //    @ApiModelProperty(hidden = true)
     private int type;
 

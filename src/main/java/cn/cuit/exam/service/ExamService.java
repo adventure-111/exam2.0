@@ -1,9 +1,15 @@
 package cn.cuit.exam.service;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import cn.cuit.exam.bean.*;
 import cn.cuit.exam.bean.common.ClassroomAllocation;
 import cn.cuit.exam.bean.vo.CourseQuery;
+=======
+import cn.cuit.exam.bean.Class;
+import cn.cuit.exam.bean.Exam;
+import cn.cuit.exam.bean.common.ClassroomAllocation;
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
 import cn.cuit.exam.bean.Class;
 import cn.cuit.exam.bean.Exam;
@@ -18,6 +24,7 @@ public interface ExamService {
 
     void test();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     public ClassroomAllocation[] getClassroomAllocation(List<Klass> classList, Exam temp);
 
@@ -41,11 +48,16 @@ public interface ExamService {
 
     List<Examinee> queryExaminee(String eno, String site);
 =======
+=======
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
     public ClassroomAllocation[] getClassroomAllocation(List<Class> classList, Exam temp);
 
     public void autoInsertExamSecondary(ClassroomAllocation[] allocations, Exam temp, int selected, List<Class> classList);
 
     List<Exam> autoInsertExamThird(List<Exam> examList);
 
+<<<<<<< HEAD
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
+=======
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 }

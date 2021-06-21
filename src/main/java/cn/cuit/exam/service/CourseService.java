@@ -5,7 +5,11 @@ import cn.cuit.exam.bean.PageBean;
 import cn.cuit.exam.bean.Teach;
 import cn.cuit.exam.bean.vo.CourseQuery;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import cn.cuit.exam.bean.vo.TeachQuery;
+=======
+import org.springframework.stereotype.Service;
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
 import org.springframework.stereotype.Service;
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c

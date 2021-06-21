@@ -6,7 +6,11 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+=======
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c

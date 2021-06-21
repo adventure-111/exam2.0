@@ -2,9 +2,12 @@ package cn.cuit.exam.service.impl;
 
 import cn.cuit.exam.bean.Classroom;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import cn.cuit.exam.bean.PageBean;
 import cn.cuit.exam.bean.Teacher;
 import cn.cuit.exam.bean.vo.ClassroomQuery;
+=======
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 import cn.cuit.exam.mapper.ClassroomMapper;
@@ -13,9 +16,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+=======
+import java.util.List;
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
 import java.util.List;
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
@@ -30,6 +37,7 @@ public class ClassroomServiceImpl implements ClassroomService {
     public List<Classroom> queryClassroomByTeachBuildingIdAndType(int id, int type) {
         return mapper.queryClassroomByTeachBuildingIdAndType(id, type);
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 
     @Override
@@ -79,6 +87,8 @@ public class ClassroomServiceImpl implements ClassroomService {
     public int deleteClassroom(String site) {
         return 0;
     }
+=======
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 }

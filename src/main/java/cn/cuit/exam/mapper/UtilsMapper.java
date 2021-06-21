@@ -2,7 +2,10 @@ package cn.cuit.exam.mapper;
 
 import cn.cuit.exam.bean.Admin;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import cn.cuit.exam.bean.User;
+=======
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 import org.apache.ibatis.annotations.Mapper;
@@ -54,6 +57,9 @@ public interface UtilsMapper {
     String getTnameByTno(String username);
 
     String getSnameBySno(String username);
+
+    // 根据用户名查找管理员
+    Admin queryAdminByUsername(String username);
 
     // 根据用户名查找管理员
     Admin queryAdminByUsername(String username);

@@ -71,7 +71,10 @@
                selectByExampleQueryId="false" />
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
         <table tableName="class_t" domainObjectName="Class"
                enableCountByExample="false"
                enableUpdateByExample="false"
@@ -86,6 +89,9 @@
                enableSelectByExample="false"
                selectByExampleQueryId="false" />
 
+<<<<<<< HEAD
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
+=======
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
     </context>
 </generatorConfiguration>

@@ -22,6 +22,7 @@
     </select>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     <select id="getClassNumByCid" resultType="java.lang.Integer">
         select num
         from class_t c
@@ -62,12 +63,15 @@
 
 =======
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
+=======
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
     <select id="queryAdminByUsername" resultType="cn.cuit.exam.bean.Admin">
         select username, password, school
         from admin_t
         where username = #{arg0}
     </select>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     <select id="queryUserByUsername" resultType="cn.cuit.exam.bean.User" >
         select username, password, role
@@ -95,6 +99,8 @@
         select sname from student_t where sno = #{arg0}
     </select>
 
+=======
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 </mapper>

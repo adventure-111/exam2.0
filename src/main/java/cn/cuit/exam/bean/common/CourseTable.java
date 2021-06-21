@@ -1,6 +1,10 @@
 package cn.cuit.exam.bean.common;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+import cn.cuit.exam.bean.Class;
+>>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
 =======
 import cn.cuit.exam.bean.Class;
 >>>>>>> 187dfa79b7624ad3b32402b2d51666eb61aa014c
