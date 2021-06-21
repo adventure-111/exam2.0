@@ -4,4 +4,12 @@
     <update id="insertAbsence" parameterType="cn.cuit.exam.bean.Absence">
         insert into absence_t(tno, eno, reason, state, comment) VALUES (#{tno}, #{eno}, #{reason}, 1, '')
     </update>
+
+    <update id="updateAbsence" parameterType="cn.cuit.exam.bean.Absence">
+        update absence_t set state = #{state}, comment = #{comment} where eno = #{eno} and tno == #{tno};
+    </update>
+
+    <select id="queryByEnoAndTno" resultType="cn.cuit.exam.bean.Absence">
+        select * from absence_t where eno=#{eno} and tno=#{tno};
+    </select>
 </mapper>

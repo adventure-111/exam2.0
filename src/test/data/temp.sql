@@ -1,8 +1,13 @@
 # 2021.6.14 余春生
 
 alter table examinee_t drop foreign key fk_examinee_exam_eno;
-alter table exam_t modify eno int ;
+alter table absence_t drop foreign key fk_absence_exam_eno;
+alter table inspector_t drop foreign key fk_inspector_exam_eno;
+alter table exam_t modify eno int auto_increment;
 alter table examinee_t add constraint fk_examinee_exam_eno foreign key (eno) references exam_t(eno);
+alter table absence_t add  constraint fk_absence_exam_eno foreign key (eno) references exam_t(eno);
+alter table inspector_t add constraint fk_inspector_exam_eno foreign key (eno) references exam_t(eno);
+
 
 # 2021-6-16
 
@@ -42,6 +47,13 @@ create table absence_t (
 
 alter table exam_t add patrol1 varchar(15);
 alter table exam_t add patrol2 varchar(15);
+
+select * from exam_t;
+
+alter table exam_t modify column day date null ;
+alter table exam_t modify column start time null ;
+alter table exam_t modify column end time null ;
+alter table exam_t modify state int null ;
 
 alter table examinee_t modify column seat int;
 

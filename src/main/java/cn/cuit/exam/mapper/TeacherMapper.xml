@@ -92,4 +92,8 @@
     <select id="selectSchoolByTno" resultType="java.lang.String">
         select school from teacher_t where tno=#{arg0}
     </select>
+
+    <select id="selectTeacherByTname" resultType="cn.cuit.exam.bean.Teacher">
+        select * from teacher_t where tname=#{arg0};
+    </select>
 </mapper>

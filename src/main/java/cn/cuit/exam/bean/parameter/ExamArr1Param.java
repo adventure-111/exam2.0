@@ -13,9 +13,9 @@ import java.util.List;
  * 考试安排第二步所需要的的参数
  */
 @Data
-public class ExamArr2Param {
+public class ExamArr1Param {
 
-    @ApiModelProperty(value = "班级列表cid", example = "32")
+    @ApiModelProperty(value = "班级列表cid", example = "[1,2,3]")
     private List<Integer> cidList;
 
     private Calendar calendar;

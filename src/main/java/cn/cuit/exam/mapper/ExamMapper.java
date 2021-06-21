@@ -14,5 +14,9 @@ public interface ExamMapper {
 
     int insertExam(Exam exam);
 
+    Exam getExamByCnoAndCnt(String cno, int cnt);
+
     List<Klass> getClassList(@Param("school") String school, @Param("cno") String cno);
+
+    int updateDay(Exam exam);
 }

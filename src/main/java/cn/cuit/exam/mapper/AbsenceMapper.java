@@ -10,4 +10,6 @@ public interface AbsenceMapper {
 
     int updateAbsence(Absence absence);
 
+    Absence queryByEnoAndTno(int eno, String tno);
+
 }

@@ -14,6 +14,9 @@ public interface TeacherMapper {
     // 根据工号查询
     Teacher selectTeacherByTno(String tno);
 
+    // 根据教师名字查询
+    Teacher selectTeacherByTname(String tname);
+
     // 查询记录总条数
     Integer selectTeacherCount(TeacherQuery teacherQuery);
 

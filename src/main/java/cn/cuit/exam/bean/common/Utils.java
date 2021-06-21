@@ -121,14 +121,6 @@ public class Utils {
     }
 
     /**
-     * 非操作(!)
-     */
-    public static int getReverse(int x) {
-        if (x > 0) return 0;
-        else return 1;
-    }
-
-    /**
      * 根据相对时间获得绝对时间
      */
     public static Calendar getCalenderByAxis(int axis) {
@@ -151,6 +143,14 @@ public class Utils {
      */
     public static int getWeekdayByDate(Calendar date) {
         return (int) (((date.getTimeInMillis() - Utils.getInitDate().getTimeInMillis()) % (1000 * 3600 * 24 * 7)) / (1000 * 3600 * 24 + 1));
+    }
+
+    /**
+     * 非操作(!)
+     */
+    public static int getReverse(int x) {
+        if (x > 0) return 0;
+        else return 1;
     }
 
 }

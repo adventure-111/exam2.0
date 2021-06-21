@@ -15,4 +15,20 @@
         where school = #{school} and cno = #{cno}
     </select>
 
+    <update id="updateDay" parameterType="cn.cuit.exam.bean.Exam">
+        update exam_t set day = #{day} where cno = #{cno} and cnt = #{cnt};
+    </update>
+
+    <update id="insertExam" parameterType="cn.cuit.exam.bean.Exam">
+        insert into exam_t (cno, cnt) values (#{cno}, #{cnt});
+    </update>
+
+    <select id="getAllExam" resultType="cn.cuit.exam.bean.Exam">
+        select * from exam_t;
+    </select>
+
+    <select id="getExamByCnoAndCnt" parameterType="cn.cuit.exam.bean.Exam">
+        select * from exam_t where cno = #{arg0} and cnt = #{arg1};
+    </select>
+
 </mapper>

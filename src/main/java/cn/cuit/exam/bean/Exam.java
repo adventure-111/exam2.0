@@ -5,10 +5,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -25,7 +25,7 @@ public class Exam implements Serializable {
     private String site;
 
     @ApiModelProperty(value = "考试日期", hidden = true)
-    private Calendar day;   //有效值（年、月、日）
+    public Calendar day;   //有效值（年、月、日）
 
     private Calendar start; //有效值（时、分）
     private Calendar end;
@@ -64,6 +64,10 @@ public class Exam implements Serializable {
         int week = this.getWeek();
         int weekdays = (int) (day.getTimeInMillis() - init.getTimeInMillis()) / (1000 * 3600 * 24);
         return weekdays % week + 1;
+    }
+
+    public Date getDay() {
+        return (Date) this.day.getTime();
     }
 
 }

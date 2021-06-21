@@ -2,6 +2,7 @@ package cn.cuit.exam.service.impl;
 
 import cn.cuit.exam.bean.*;
 import cn.cuit.exam.bean.common.*;
+import cn.cuit.exam.bean.parameter.ManualExamArr2Param;
 import cn.cuit.exam.mapper.*;
 import cn.cuit.exam.service.ExamService;
 import cn.cuit.exam.service.TeacherService;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -28,6 +31,8 @@ public class ExamServiceImpl implements ExamService {
     private StudentMapper studentMapper;
     @Autowired
     private ExamineeMapper examineeMapper;
+    @Autowired
+    private AbsenceMapper absenceMapper;
 
 
     public void test() {
@@ -43,10 +48,10 @@ public class ExamServiceImpl implements ExamService {
         Klass classTemp = classList.get(0);
         Classroom crtemp = null;
 
-        System.out.println(Utils.isClassTimeScheduleConflict(classList, temp.getDay(), temp.getDuration()));
+        System.out.println(Utils.isClassTimeScheduleConflict(classList, temp.day, temp.getDuration()));
 
         //如果所有班级之间两两不冲突
-        if (Utils.isClassTimeScheduleConflict(classList, temp.getDay(), temp.getDuration())) {
+        if (Utils.isClassTimeScheduleConflict(classList, temp.day, temp.getDuration())) {
 
             int duration = temp.getDuration() / 5;  //考试时长
 
@@ -122,24 +127,20 @@ public class ExamServiceImpl implements ExamService {
      * 未知参数：用户选择
      */
     @Override
-    public void autoInsertExamSecondary(ClassroomAllocation[] allocations, Exam temp, int selected) {
-        temp.setStart(allocations[selected].getStart());
-        temp.setEnd(allocations[selected].getEnd());
+    public void autoInsertExamSecondary(ClassroomAllocation allocation, Exam temp) {
+        temp.setStart(allocation.getStart());
+        temp.setEnd(allocation.getEnd());
 
         // 添加考试和教室的对应关系
         temp.setEno(ExamUtils.examList.size());
         ExamUtils.examList.set(temp.getEno(), temp);
 
         List<String> rooms = new ArrayList<>();
-        for (Classroom room : allocations[selected].getClassrooms()) {
+        for (Classroom room : allocation.getClassrooms()) {
             rooms.add(room.getSite());
         }
 
         ExamUtils.ClassroomExamMap.put(temp.getEno(), rooms);
-
-        // 添加考试和班级的对应关系
-        List<Integer> klasses = temp.getCidList();
-        ExamUtils.ClassExamMap.put(temp.getEno(), klasses);
     }
 
     @Override
@@ -225,13 +226,59 @@ public class ExamServiceImpl implements ExamService {
         return examMapper.getClassList(school, cno);
     }
 
+    /**
+     * 排考第二步--手动排考--获取冲突表
+     * @param param
+     * @return
+     * @throws ParseException
+     */
+    @Override
+    public Map<Integer, List<String>> getConflictSituation(ManualExamArr2Param param, int duration) {
+
+        // 将字符串表示的日期转化为Calender类
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date tempDate = null;
+        try {
+            tempDate = sdf.parse(param.getDay());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar calendar = Calendar.getInstance();
+
+        assert tempDate != null;
+        calendar.setTime(tempDate);
+
+        // 获取当天是第几周的星期几
+        int week = Utils.getWeekByDate(calendar);
+        int weekday = Utils.getWeekdayByDate(calendar);
+
+        // 结果集
+        Map<Integer, List<String>> res = new HashMap<>();
+
+        for (int i = 0; i < Utils.UsableTime.length; ++i) {
+            int rel = Utils.UsableTime[i];
+            List<String> list = new ArrayList<>();
+            for (String site : param.getSites()) {
+                if (!CourseTable.classrooms.get(CourseTable.classnameToId.get(site)).queryForFree(
+                        week, weekday, rel, rel + duration / 5
+                )) {
+                    list.add(site);
+                }
+            }
+            res.put(i, list);
+        }
+
+        return res;
+
+    }
+
     // -------------------------------------controller调用-------------------------------------------------
     @Override
     public ClassroomAllocation[] ClassroomAllocation(Exam exam) {
         CourseTable.importCourseTable(new File("src/test/data/data.csv"));
         System.out.println(exam);
         List<Klass> classes = new ArrayList<>();
-        for ( Integer cid: exam.getCidList() ) {
+        for ( Integer cid: ExamUtils.ClassExamMap.get(exam.getEno()) ) {
             System.out.println(cid);
             Klass c = classMapper.queryByCid(cid);
             c.setOccupy(new int[140][170]);
@@ -295,5 +342,8 @@ public class ExamServiceImpl implements ExamService {
         }
     }
 
+    public boolean isTeacherFree(String tno, int eno) {
+        return !(absenceMapper.queryByEnoAndTno(eno, tno) == null);
+    }
 
 }
