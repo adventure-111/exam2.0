@@ -5,10 +5,10 @@
     <cache/>
 
     <sql id="query_items_where" >
-        <if test="cno != null">
+        <if test="cno != null and cno != ''">
             and cno = #{cno}
         </if>
-        <if test="cname != null">
+        <if test="cname != null and cname != ''">
             and cname like '%${cname}$%'
         </if>
         <if test="type != null and type != 0">
@@ -17,7 +17,7 @@
     </sql>
 
     <select id="selectCourseCount" resultType="java.lang.Integer" parameterType="cn.cuit.exam.bean.vo.CourseQuery">
-        select count(*)
+        select count(DISTINCT co.cno)
         from course_t co
         join teach_t t
         on co.cno = t.cno
@@ -27,7 +27,10 @@
         on t.tno = te.tno
         join major_t m
         on m.mno = c.mno
-        where m.school = #{school}
+        <where>
+            <include refid="query_items_where"></include>
+            and m.school = #{school}
+        </where>
     </select>
 
     <select id="selectCourse" resultType="cn.cuit.exam.bean.Course" parameterType="cn.cuit.exam.bean.vo.CourseQuery">
@@ -57,7 +60,7 @@
 
         <trim prefix="limit " >
             <if test="pageNum != null, pageSize != null">
-                #{pageNum}, #{pageSize}
+                #{beginRow}, #{pageSize}
             </if>
         </trim>
     </select>
@@ -86,7 +89,7 @@
 
         <trim prefix="limit " >
             <if test="pageNum != null, pageSize != null">
-                #{pageNum}, #{pageSize}
+                #{beginRow}, #{pageSize}
             </if>
         </trim>
     </select>
@@ -108,7 +111,7 @@
 
         <trim prefix="limit " >
             <if test="pageNum != null, pageSize != null">
-                #{pageNum}, #{pageSize}
+                #{beginRow}, #{pageSize}
             </if>
         </trim>
     </select>
@@ -132,7 +135,7 @@
         group by c.cid, t.tno
         <trim prefix="limit " >
             <if test="pageNum != null, pageSize != null">
-                #{pageNum}, #{pageSize}
+                #{beginRow}, #{pageSize}
             </if>
         </trim>
 
@@ -212,5 +215,9 @@
         delete from teach_t
         where cno = #{cno} and cid = #{cid} and tno = #{tno}
    </delete>
+
+    <select id="getNameByCno" resultType="java.lang.String">
+        select cname from course_t where cno=#{arg0};
+    </select>
 
 </mapper>

@@ -59,4 +59,36 @@
         where mshort = #{arg0}
     </select>
 
+    <select id="queryAdminByUsername" resultType="cn.cuit.exam.bean.Admin">
+        select username, password, school
+        from admin_t
+        where username = #{arg0}
+    </select>
+
+    <select id="queryUserByUsername" resultType="cn.cuit.exam.bean.User" >
+        select username, password, role
+        from user_t
+        where userName = #{arg0}
+    </select>
+
+    <update id="updateUserPassword" >
+        update user_t
+        set password = #{newPassword}
+        where username = #{username}
+    </update>
+
+    <update id="updateAdminPassword" >
+        update user_t
+        set password = #{newPassword}
+        where username = #{username}
+    </update>
+
+    <select id="getTnameByTno" resultType="java.lang.String">
+        select tname from teacher_t where tno = #{arg0}
+    </select>
+
+    <select id="getSnameBySno" resultType="java.lang.String">
+        select sname from student_t where sno = #{arg0}
+    </select>
+
 </mapper>

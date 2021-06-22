@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.cuit.exam.mapper.InspectorMapper">
     <update id="insertInspector" parameterType="cn.cuit.exam.bean.Inspector">
-        insert into inspector_t(teacher1, teacher2, eno, site) VALUES (#{tno1}, #{tno2}, #{eno}, #{site});
+        insert into inspector_t(teacher1, teacher2, eno, site) VALUES (#{teacher1}, #{teacher2}, #{eno}, #{site});
     </update>
 
     <select id="selectInspectorByEno">

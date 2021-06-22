@@ -126,8 +126,8 @@ public class Utils {
     public static Calendar getCalenderByAxis(int axis) {
         Calendar c = Calendar.getInstance();
         c.clear();
-        c.set(Calendar.HOUR, axis / 12);
-        c.set(Calendar.MINUTE, axis % 12);
+        c.set(Calendar.HOUR, axis / 12 + 8);
+        c.set(Calendar.MINUTE, (axis % 12) * 5);
         return c;
     }
 

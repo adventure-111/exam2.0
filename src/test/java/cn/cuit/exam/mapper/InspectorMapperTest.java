@@ -13,7 +13,7 @@ public class InspectorMapperTest {
 
     @Test
     void test1() {
-        System.out.println(inspectorMapper.insertInspector(new Inspector("ajx", "wx", 0, "H2101")));
+        //System.out.println(inspectorMapper.insertInspector(new Inspector("ajx", "wx", 0, "H2101")));
     }
 
 

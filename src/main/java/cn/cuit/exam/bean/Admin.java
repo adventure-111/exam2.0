@@ -11,4 +11,5 @@ public class Admin{
 
     private String school;
 
+    private String newPassword;
 }

@@ -5,6 +5,7 @@ import cn.cuit.exam.bean.vo.ClassroomQuery;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface ClassroomMapper {
@@ -22,4 +23,6 @@ public interface ClassroomMapper {
 
     // 条件查询教室总记录条数
     int selectClassroomCount(ClassroomQuery classroomQuery);
+
+    List<Map> getSiteByTeachBuildingAndLayers(String no);
 }

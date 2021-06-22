@@ -1,32 +1,48 @@
 package cn.cuit.exam.bean;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.util.Calendar;
+import java.io.Serializable;
+import java.util.Date;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Inspector extends Exam{
+public class Inspector implements Serializable {
 
-    private String tno1;
+    @ApiModelProperty(value = "监考1")
+    private String teacher1;
 
-    private String tno2;
+    @ApiModelProperty(value = "监考2")
+    private String teacher2;
 
+    private int eno;
+
+    @ApiModelProperty(value = "课程号")
+    private String cno;
+
+    @ApiModelProperty(value = "课程名")
+    private String cname;
+
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT")
+    @ApiModelProperty(value = "考试日期")
+    private Date day;
+
+    @JsonFormat(pattern="HH:mm",timezone = "GMT")
+    @ApiModelProperty(value = "开始时间")
+    private Date start;
+
+    @JsonFormat(pattern="HH:mm", timezone="GMT")
+    @ApiModelProperty(value = "结束时间")
+    private Date end;
+
+    @ApiModelProperty(value = "考试地点")
     private String site;
 
+    @ApiModelProperty(value = "监考教师1名字")
     private String tname1;
 
+    @ApiModelProperty(value = "监考教师2名字")
     private String tname2;
-
-    public Inspector(String teacher1, String teacher2, int eno, String site) {
-        this.tno1 = teacher1;
-        this.tno2 = teacher2;
-        this.setEno(eno);
-        this.site = site;
-    }
-
 
 }

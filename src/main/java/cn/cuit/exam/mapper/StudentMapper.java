@@ -4,6 +4,7 @@ import cn.cuit.exam.bean.Student;
 import cn.cuit.exam.bean.vo.StudentQuery;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -29,8 +30,6 @@ public interface StudentMapper {
 
     // 查询专业简称
     String selectMajorMshort(String mname);
-
-    List<Student> getAllStuByCid(int cid);
 
     // 增加学生人数
     int addStuNum(int cid);
@@ -59,4 +58,5 @@ public interface StudentMapper {
     // 更新用户表
     int updateUser(Student student);
 
+    List<Student> getAllStuByCid(int cid);
 }

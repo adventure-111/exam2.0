@@ -12,8 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @Api(value = "学生数据维护", description = "学生数据维护")
@@ -49,6 +50,7 @@ public class StudentController {
 //        long t1 = System.currentTimeMillis();
 //        long t2 = System.currentTimeMillis();
 //        System.out.println(String.format("read over! cost:%sms", (t2 - t1)));
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!");
         List<Student> list = ExcelUtils.readExcel("", Student.class, file);
 //        System.out.println(list);
         Map map = studentService.addStudentList(list);
@@ -67,7 +69,10 @@ public class StudentController {
 
     @DeleteMapping("/delStudentList")
     @ApiOperation(value = "批量删除学生", notes = "[\"2019000003\", \"2019000004\"]")
-    public void deleteStudentList(@RequestBody List<String> snoList) {
+    public void deleteStudentList(@RequestBody String[] snos) {
+        System.out.println(snos);
+        List snoList = Arrays.stream(snos).collect(Collectors.toList());
+        System.out.println(snoList);
         studentService.deleteStudentList(snoList);
     }
 
@@ -80,8 +85,22 @@ public class StudentController {
 
     @GetMapping("/student/majorList")
     @ApiOperation(value = "查询条件:专业下拉列表", notes = "传入参数示例：软件工程")
-    public List majorList(String school) {
-        return utilsMapper.selectMajorList(school);
+    public Map majorList(String school) {
+        System.out.println("--------------");
+        Map<String, ArrayList<Map>> map = new HashMap<>();
+        ArrayList<Map> majors = new ArrayList<>();
+        List<String> list = utilsMapper.selectMajorList(school);
+        System.out.println(list);
+        for ( String m :  list ) {
+            Map<String, String> major = new HashMap<>();
+            major.put("name", m);
+            major.put("value", m);
+            majors.add(major);
+            System.out.println("-----------------"+m);
+        }
+        System.out.println("-----------------"+majors+"--------------");
+        map.put("list", majors);
+        return map;
     }
 
     @GetMapping("/student/semesterList")

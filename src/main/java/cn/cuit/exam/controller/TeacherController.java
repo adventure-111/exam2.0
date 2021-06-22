@@ -46,9 +46,9 @@ public class TeacherController {
     @PutMapping("/teacher/import")
     @ApiOperation(value = "添加教师(导入文件)",
                     notes = "文件示例：工号 姓名 密码")
-    public Map importTeacher(@RequestPart(value = "file") MultipartFile file, String school) {
+    public Map importTeacher(@RequestPart(value = "file") MultipartFile file) {
         List<Teacher> list = ExcelUtils.readExcel("", Teacher.class, file);
-        Map map = teacherService.addTeacherList(list, school);
+        Map map = teacherService.addTeacherList(list);
         return map;
     }
 

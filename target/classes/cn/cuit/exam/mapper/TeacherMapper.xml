@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.cuit.exam.mapper.TeacherMapper">
     <sql id="query_items_where" >
-        <if test="tno != null">
+        <if test="tno != null and tno != ''">
             and tno = #{tno}
         </if>
-        <if test="tname != null">
+        <if test="tname != null and tname != ''">
             and tname = #{tname}
         </if>
-        <if test="school != null">
+        <if test="school != null and school != ''">
             and school = #{school}
         </if>
     </sql>
@@ -30,7 +30,7 @@
 
         <trim prefix="limit " >
             <if test="pageNum != null, pageSize != null">
-                #{pageNum}, #{pageSize}
+                #{beginRow}, #{pageSize}
             </if>
         </trim>
     </select>
@@ -91,5 +91,13 @@
 
     <select id="selectSchoolByTno" resultType="java.lang.String">
         select school from teacher_t where tno=#{arg0}
+    </select>
+
+    <select id="selectTeacherByTname" resultType="cn.cuit.exam.bean.Teacher">
+        select * from teacher_t where tname=#{arg0};
+    </select>
+
+    <select id="selectTnameByTno" resultType="java.lang.String">
+        select tname from teacher_t where tno=#{arg0};
     </select>
 </mapper>

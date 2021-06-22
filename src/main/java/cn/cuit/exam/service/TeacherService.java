@@ -30,7 +30,7 @@ public interface TeacherService {
      * @param teacherList
      * @return
      */
-    Map addTeacherList(List<Teacher> teacherList, String school);
+    Map addTeacherList(List<Teacher> teacherList);
 
     /**
      * 更新教师信息

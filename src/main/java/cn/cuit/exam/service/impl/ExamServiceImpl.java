@@ -3,6 +3,8 @@ package cn.cuit.exam.service.impl;
 import cn.cuit.exam.bean.*;
 import cn.cuit.exam.bean.common.*;
 import cn.cuit.exam.bean.parameter.ManualExamArr2Param;
+import cn.cuit.exam.bean.vo.CourseQuery;
+import cn.cuit.exam.bean.vo.TeacherQuery;
 import cn.cuit.exam.mapper.*;
 import cn.cuit.exam.service.ExamService;
 import cn.cuit.exam.service.TeacherService;
@@ -10,13 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.text.ParseException;
 
 @Service
 public class ExamServiceImpl implements ExamService {
-
     @Autowired
     private ClassroomMapper classroomMapper;
     @Autowired
@@ -33,11 +34,14 @@ public class ExamServiceImpl implements ExamService {
     private ExamineeMapper examineeMapper;
     @Autowired
     private AbsenceMapper absenceMapper;
+    @Autowired
+    private CourseMapper courseMapper;
 
 
     public void test() {
         System.out.println("OK!");
     }
+
 
     /**
      * 获取所有供选方案
@@ -57,7 +61,7 @@ public class ExamServiceImpl implements ExamService {
 
             System.out.println("getClassroomAllocation");
 
-            // 获取每栋教学楼的可用教室
+            // 获取每个时间点的可用教室
             List<Classroom>[] teachBuildings = new ArrayList[4];
             for (int i = 0; i < 4; ++i) {
                 teachBuildings[i] = classroomMapper.queryClassroomByTeachBuildingIdAndType(i + 1, temp.getType());
@@ -96,17 +100,22 @@ public class ExamServiceImpl implements ExamService {
             }
 
             //获取供选方案
-            ClassroomAllocation[] cas = new ClassroomAllocation[4];
-            for (int i = 0; i < 4; ++i) {
-                for (int j = 0; j < 3; ++j) {
-                    if (usableClassrooms[i][j].size() >= examRoomNum) {
+            ClassroomAllocation[] cas = new ClassroomAllocation[3];
+            for (int i = 0; i < 3; ++i) {
+                for (int j = 0; j < 4; ++j) {
+                    if (usableClassrooms[j][i].size() >= examRoomNum) {
                         List<Classroom> tmp = new ArrayList<>();
-                        for (Classroom classroom : usableClassrooms[i][j]) {
+                        for (Classroom classroom : usableClassrooms[j][i]) {
                             tmp.add(classroom);
                             if (tmp.size() == examRoomNum) break;
                         }
-                        cas[i] = (new ClassroomAllocation(Utils.getCalenderByAxis(Utils.UsableTime[j]),
-                                Utils.getCalenderByAxis(Utils.UsableTime[j] + duration), tmp));
+                        if (tmp.size() == examRoomNum) {
+                            System.out.println(Utils.getCalenderByAxis(Utils.UsableTime[i]) + " " +
+                                    Utils.getCalenderByAxis(Utils.UsableTime[i] + duration));
+                            cas[i] = new ClassroomAllocation(Utils.getCalenderByAxis(Utils.UsableTime[i]),
+                                    Utils.getCalenderByAxis(Utils.UsableTime[i] + duration), tmp);
+                            break;
+                        }
                     }
                     System.out.println(cas[i]);
                 }
@@ -128,12 +137,12 @@ public class ExamServiceImpl implements ExamService {
      */
     @Override
     public void autoInsertExamSecondary(ClassroomAllocation allocation, Exam temp) {
+        System.out.println("===========autoInsertExamSecondary=============");
+        System.out.println(allocation.getStart().getTime());
         temp.setStart(allocation.getStart());
         temp.setEnd(allocation.getEnd());
 
-        // 添加考试和教室的对应关系
-        temp.setEno(ExamUtils.examList.size());
-        ExamUtils.examList.set(temp.getEno(), temp);
+        examMapper.updateStartAndEnd(temp);
 
         List<String> rooms = new ArrayList<>();
         for (Classroom room : allocation.getClassrooms()) {
@@ -144,10 +153,10 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public List<Inspector> getTeacherAllocation(Exam exam) {
+    public List<Inspector> getTeacherAllocation(Exam exam, String school) {
 
         // 获取所有教师构成的小顶堆
-        PriorityQueue<Teacher> teachers = teacherService.getMinHeapBySchool(exam.getSchool());
+        PriorityQueue<Teacher> teachers = teacherService.getMinHeapBySchool(school);
 
         // 形成(eno, List<tno>)对照表的值
         List<String> tnos = new ArrayList<>();
@@ -157,6 +166,8 @@ public class ExamServiceImpl implements ExamService {
         for (String site : ExamUtils.ClassroomExamMap.get(exam.getEno())) {
             classrooms.add(classroomMapper.getClassroomBySite(site));
         }
+
+        System.out.println(teachers.size() + " " + classrooms.size());
 
         //若教师数量不足，则返回空
         if (teachers.size() < classrooms.size() * 2 + 2) return null;
@@ -204,9 +215,6 @@ public class ExamServiceImpl implements ExamService {
             inspectors.add(inspector);
         }
 
-        // 插入监考教师表
-        for (Inspector inspector : inspectors) inspectorMapper.insertInspector(inspector);
-
         // 返回监考方案
         return inspectors;
     }
@@ -217,7 +225,8 @@ public class ExamServiceImpl implements ExamService {
      */
     @Override
     public void tempStore(Exam exam) {
-        examMapper.insertExam(exam);
+        exam.setState(2);
+        examMapper.updateState(exam);
     }
 
     @Override
@@ -275,6 +284,7 @@ public class ExamServiceImpl implements ExamService {
     // -------------------------------------controller调用-------------------------------------------------
     @Override
     public ClassroomAllocation[] ClassroomAllocation(Exam exam) {
+        // 加载课程表
         CourseTable.importCourseTable(new File("src/test/data/data.csv"));
         System.out.println(exam);
         List<Klass> classes = new ArrayList<>();
@@ -288,7 +298,8 @@ public class ExamServiceImpl implements ExamService {
     }
 
     public void deploy(Exam exam) {
-        examMapper.insertExam(exam);
+        exam.setState(3);
+        examMapper.updateState(exam);
 
         // 为参与这场考试的所有考生安排座位
 
@@ -345,5 +356,38 @@ public class ExamServiceImpl implements ExamService {
     public boolean isTeacherFree(String tno, int eno) {
         return !(absenceMapper.queryByEnoAndTno(eno, tno) == null);
     }
+
+    @Override
+    public PageBean<Course> getCourseList(CourseQuery courseQuery) {
+        // 查询总记录条数
+        int totalCount = courseMapper.selectCourseCount(courseQuery);
+        // 查询课程集合
+        List<Course> list = courseMapper.selectCourse(courseQuery);
+        // 创建pageBean
+        PageBean<Course> pageBean = new PageBean<Course>(totalCount, list, courseQuery.getPageSize(), courseQuery.getPageNum());
+
+        return pageBean;
+    }
+
+    @Override
+    public List<Patrol> queryPatrol(String cno) {
+        return examMapper.queryPatrol(cno);
+    }
+
+    @Override
+    public List<Inspector> queryInspector(String eno) {
+        return examMapper.queryInspector(eno);
+    }
+
+    @Override
+    public List<Examinee> queryExaminee(String eno, String site) {
+        return examMapper.queryExaminee(eno, site);
+    }
+
+    @Override
+    public List<Map> getSiteList(String no) {
+        return classroomMapper.getSiteByTeachBuildingAndLayers(no);
+    }
+
 
 }

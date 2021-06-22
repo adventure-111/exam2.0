@@ -4,8 +4,10 @@ import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class Classroom {
+public class Classroom implements Serializable {
 
     @ApiModelProperty(value = "教室编号", example = "H1101")
     @ExcelColumn(value = "编号", col = 1)

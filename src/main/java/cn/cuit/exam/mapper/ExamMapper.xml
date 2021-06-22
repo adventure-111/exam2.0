@@ -15,8 +15,89 @@
         where school = #{school} and cno = #{cno}
     </select>
 
+    <select id="getStuExamInfo" resultType="cn.cuit.exam.bean.Examinee" >
+        select
+--         c.cno, cname, Date_format(day, '%Y-%m-%d'), (start, '%h:%i'), (end, '%h:%i')
+        c.cno, cname, day, start, end, site, seat
+        from exam_t e
+        join examinee_t ee
+        on e.eno = ee.eno
+        join course_t c
+        on c.cno = e.cno
+        where sno = #{arg0}
+    </select>
+
+    <select id="getInspectorInfo" resultType="cn.cuit.exam.bean.Inspector">
+        select DISTINCT c.cno, cname, day, start, end, site,
+                (select tname from teacher_t where tno = teacher1) as teacher1,
+                (select tname from teacher_t where tno = teacher2) as teacher2
+        from exam_t e
+            join inspector_t i
+            on e.eno = i.eno
+            join course_t c
+            on c.cno = e.cno
+            join teacher_t t
+            on t.tno = i.teacher1 or t.tno = i.teacher2
+        where teacher1 = #{arg0} or teacher2 = #{arg1}
+    </select>
+
+    <select id="getPatrolInfo" resultType="cn.cuit.exam.bean.Patrol">
+        select e.eno, c.cno, cname, day,start,end,group_concat(DISTINCT site) as sites,
+                (select tname from teacher_t where tno = patrol1) as patrol1,
+                (select tname from teacher_t where tno = patrol2) as patrol2
+        from exam_t e
+            join inspector_t ee
+            on e.eno = ee.eno
+            join course_t c
+            on c.cno = e.cno
+            join teacher_t t
+            on t.tno = e.patrol1 or t.tno = e.patrol2
+        where patrol1 = #{arg0} or patrol2 = #{arg1}
+    </select>
+
+    <select id="queryPatrol" resultType="cn.cuit.exam.bean.Patrol">
+        select distinct e.eno, day, start, end,
+                (select tname from teacher_t where tno = patrol1) as patrol1,
+                (select tname from teacher_t where tno = patrol2) as patrol2
+        from exam_t e
+            join inspector_t ee
+            on e.eno = ee.eno
+            join course_t c
+            on c.cno = e.cno
+            join teacher_t t
+            on t.tno = e.patrol1 or t.tno = e.patrol2
+        where c.cno = #{arg0}
+    </select>
+
+    <select id="queryInspector" resultType="cn.cuit.exam.bean.Inspector">
+        select distinct site, (select tname from teacher_t where tno = teacher1) as teacher1,
+                     (select tname from teacher_t where tno = teacher2) as teacher2
+        from exam_t e
+                 join inspector_t i
+                      on e.eno = i.eno
+                 join teacher_t t
+                      on t.tno = i.teacher1 or t.tno = i.teacher2
+        where e.eno = #{arg0}
+    </select>
+
+    <select id="queryExaminee" resultType="cn.cuit.exam.bean.Examinee">
+        select
+            group_concat(mshort,semester,c.cnt) as cname, s.sno, sname, seat
+        from exam_t e
+            join examinee_t ee
+        on e.eno = ee.eno
+            join student_t s
+        on s.sno = ee.sno
+            join class_t c
+        on s.cid = c.cid
+            join major_t m
+        on m.mno = c.mno
+        where site = #{site} and e.eno = #{eno}
+        group by c.cid
+    </select>
+
     <update id="updateDay" parameterType="cn.cuit.exam.bean.Exam">
-        update exam_t set day = #{day} where cno = #{cno} and cnt = #{cnt};
+        update exam_t set day = #{day}, type = #{type} where cno = #{cno} and cnt = #{cnt};
     </update>
 
     <update id="insertExam" parameterType="cn.cuit.exam.bean.Exam">
@@ -27,8 +108,16 @@
         select * from exam_t;
     </select>
 
-    <select id="getExamByCnoAndCnt" parameterType="cn.cuit.exam.bean.Exam">
-        select * from exam_t where cno = #{arg0} and cnt = #{arg1};
+    <select id="getExamByCnoAndCnt" resultType="cn.cuit.exam.bean.Exam">
+        select * from exam_t where cno = #{cno} and cnt = #{cnt};
     </select>
+
+    <update id="updateState" parameterType="cn.cuit.exam.bean.Exam">
+        update exam_t set state = #{state} where cno = #{cno} and cnt = #{cnt};
+    </update>
+
+     <update id="updateStartAndEnd" parameterType="cn.cuit.exam.bean.Exam">
+         update exam_t set start=#{start}, end=#{end} where cno=#{cno} and cnt=#{cnt};
+     </update>
 
 </mapper>

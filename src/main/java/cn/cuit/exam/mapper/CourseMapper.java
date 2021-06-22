@@ -62,4 +62,6 @@ public interface CourseMapper {
 
     // 删除授课关系
     int deleteTeach(Teach teach);
+
+    String getNameByCno(String cno);
 }

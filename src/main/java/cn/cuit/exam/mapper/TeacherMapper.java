@@ -14,9 +14,6 @@ public interface TeacherMapper {
     // 根据工号查询
     Teacher selectTeacherByTno(String tno);
 
-    // 根据教师名字查询
-    Teacher selectTeacherByTname(String tname);
-
     // 查询记录总条数
     Integer selectTeacherCount(TeacherQuery teacherQuery);
 
@@ -32,9 +29,6 @@ public interface TeacherMapper {
     // 更新用户表
     int updateUser(Teacher teacher);
 
-    // 根据工号获取教师所属的学院
-    String selectSchoolByTno(String tno);
-
     // 增加历史监考次数+1
     int addTotalByOne(String tno);
 
@@ -48,4 +42,10 @@ public interface TeacherMapper {
 
     // 删除用户
     int deleteUser(String tno);
+
+    Teacher selectTeacherByTname(String tname);
+
+    String selectSchoolByTno(String tno);
+
+    String selectTnameByTno(String tno);
 }

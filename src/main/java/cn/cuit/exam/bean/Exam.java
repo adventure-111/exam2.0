@@ -27,8 +27,8 @@ public class Exam implements Serializable {
     @ApiModelProperty(value = "考试日期", hidden = true)
     public Calendar day;   //有效值（年、月、日）
 
-    private Calendar start; //有效值（时、分）
-    private Calendar end;
+    public Calendar start; //有效值（时、分）
+    public Calendar end;
 
 
     private String teacher1;
@@ -66,8 +66,45 @@ public class Exam implements Serializable {
         return weekdays % week + 1;
     }
 
-    public Date getDay() {
-        return (Date) this.day.getTime();
+    public java.sql.Date getDay() {
+        if (this.day == null) return null;
+        return new java.sql.Date(this.day.getTimeInMillis());
     }
 
+    public void setDay(java.sql.Date date) {
+        this.day = Calendar.getInstance();
+        this.day.setTime(new java.util.Date(date.getTime()));
+    }
+
+    public void setDay(Calendar day) {
+        this.day = day;
+    }
+
+    public java.sql.Time getStart() {
+        if (this.start == null) return null;
+        return new java.sql.Time(this.start.getTimeInMillis());
+    }
+
+    public java.sql.Time getEnd() {
+        if (this.end == null) return null;
+        return new java.sql.Time(this.end.getTimeInMillis());
+    }
+
+    public void setStart(java.sql.Time start) {
+        this.start = Calendar.getInstance();
+        this.start.setTime(new java.util.Date(start.getTime()));
+    }
+
+    public void setStart(Calendar start) {
+        this.start = start;
+    }
+
+    public void setEnd(java.sql.Time end) {
+        this.end = Calendar.getInstance();
+        this.end.setTime(new java.util.Date(end.getTime()));
+    }
+
+    public void setEnd(Calendar end) {
+        this.end = end;
+    }
 }

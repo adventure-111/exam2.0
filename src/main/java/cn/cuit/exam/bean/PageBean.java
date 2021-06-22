@@ -16,6 +16,8 @@ public class PageBean<Map> {
     private int pageNum;// 当前页码
     @ApiModelProperty(value = "当前页面数据")
     private List<Map> list;   // 当前页面数据
+    @ApiModelProperty(value = "分页开始记录", hidden = true)
+    private int beginRow;
 
     public PageBean() {
     }
@@ -69,6 +71,10 @@ public class PageBean<Map> {
 
     public void setList(List<Map> list) {
         this.list = list;
+    }
+
+    public int getBeginRow() {
+        return pageNum*pageSize;
     }
 
     @Override

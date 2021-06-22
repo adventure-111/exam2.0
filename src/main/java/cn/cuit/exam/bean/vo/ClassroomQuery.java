@@ -13,4 +13,8 @@ public class ClassroomQuery extends Query{
 
     @ApiModelProperty(value = "教室类型", example = "2")
     private Integer type;
+
+//    public void setType(String type1) {
+//        this.type = Integer.valueOf(type1);
+//    }
 }

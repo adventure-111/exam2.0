@@ -18,6 +18,10 @@ public class Query {
     @ApiModelProperty(value = "当前页面", example = "1", required = true)
     private Integer pageNum = 0;
 
+    public int getBeginRow() {
+        return pageNum*pageSize;
+    }
+
     public void setPageNum(Integer pageNum) {
         this.pageNum = pageNum-1;
     }

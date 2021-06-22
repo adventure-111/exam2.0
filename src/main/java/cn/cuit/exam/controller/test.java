@@ -1,36 +1,31 @@
 package cn.cuit.exam.controller;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-@Slf4j
-@RestController
+@Controller
 @RequestMapping("/test")
 public class test {
 
     @GetMapping({"/gethhh"})
-    public String gethhh() {
+    @ResponseBody
+    public String gethhh(HttpServletRequest req) {
         System.out.println("abab");
-        return "";
+        HttpSession session = req.getSession();
+        session.setAttribute("hhh", "hhh");
+        return "hhh.html";
     }
 
     @GetMapping("/gethhhh")
+    @ResponseBody
     public String gethhhh(HttpServletRequest req) {
-
-        return (String) req.getSession().getAttribute("hello");
-    }
-
-    @RequestMapping("/session")
-    public String springSession(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        session.setAttribute("hello", "123123123");
-        return String.valueOf(session.getAttribute("hello"));
+        return (String) req.getSession().getAttribute("hhh");
     }
 
 }

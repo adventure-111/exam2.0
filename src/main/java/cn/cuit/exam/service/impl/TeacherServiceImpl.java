@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 
+
 @Service
 public class TeacherServiceImpl implements TeacherService {
     @Autowired
@@ -43,13 +44,12 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Map addTeacherList(List<Teacher> teacherList, String school) {
+    public Map addTeacherList(List<Teacher> teacherList) {
         int successCount = 0;
         int totalCount = 0;
 
         for ( Teacher teacher : teacherList ) {
             totalCount++;
-            teacher.setSchool(school);
             successCount += addTeacher(teacher);
         }
         Map<String, Integer> map = new HashMap<>();

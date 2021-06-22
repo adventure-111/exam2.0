@@ -6,10 +6,14 @@
         <if test="type != null and type != 0" >
             and type = #{type}
         </if>
-        <if test="teachBuilding != null" >
+        <if test="teachBuilding != null and teachBuilding != ''" >
             and site like '%${teachBuilding}___'
         </if>
     </sql>
+
+    <select id="getSiteByTeachBuildingAndLayers" resultType="map">
+        select site as name, site as value from classroom_t where site like '%${no}__'
+    </select>
 
     <select id="queryClassroomByTeachBuildingIdAndType" resultType="cn.cuit.exam.bean.Classroom">
         select * from classroom_t where substr(site, 2, 1) = #{id} and type = #{type}
@@ -41,7 +45,7 @@
 
         <trim prefix="limit " >
             <if test="pageNum != null, pageSize != null">
-                #{pageNum}, #{pageSize}
+                #{beginRow}, #{pageSize}
             </if>
         </trim>
     </select>

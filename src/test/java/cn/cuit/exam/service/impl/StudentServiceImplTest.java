@@ -19,7 +19,7 @@ class StudentServiceImplTest {
     void queryStudent() {
         StudentQuery studentQuery = new StudentQuery();
         studentQuery.setSchool("软件工程");
-        studentQuery.setPageNum(1);
+        studentQuery.setPageNum(2);
         studentQuery.setPageSize(5);
 
         System.out.println(studentService.queryStudent(studentQuery));

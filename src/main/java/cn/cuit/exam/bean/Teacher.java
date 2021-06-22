@@ -12,6 +12,7 @@ public class Teacher {
     private String tname;
     @ExcelColumn( value = "密码", col = 3 )
     private String password;
+    @ExcelColumn( value = "学院", col = 4 )
     private String school;
     private Integer total;
     private Integer current;
